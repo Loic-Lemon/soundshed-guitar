@@ -65,9 +65,13 @@ public:
               juce::DocumentWindow::allButtons),
           mPluginHolder (std::move (pluginHolderIn))
     {
-        setUsingNativeTitleBar (true);
+        setUsingNativeTitleBar (false);
+        setTitleBarHeight (0);
         setResizable (true, true);
         setResizeLimits (640, 400, 8192, 8192);
+
+        // Pass the audio device manager to the plugin processor for device enumeration
+        PluginProcessorAdapter::setStandaloneDeviceManager (&mPluginHolder->deviceManager);
 
         if (auto* processor = mPluginHolder != nullptr ? mPluginHolder->processor.get() : nullptr)
         {

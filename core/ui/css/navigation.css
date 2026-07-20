@@ -4,81 +4,57 @@
 .icon-bar {
   display: flex;
   align-items: center;
-  gap: 0;
-  padding: 0 20px;
-  height: 44px;
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-dark);
+  gap: 8px;
+  padding: 8px 12px;
   flex-shrink: 0;
+  min-height: 0;
+  background: var(--bg-tertiary);
 }
 
-.app-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  user-select: none;
-}
-
-.icon-bar-spacer {
-  flex: 1;
-}
-
-/* Text-based nav tabs */
+/* Pill-style nav tabs */
 .nav-tabs {
   display: flex;
-  align-items: stretch;
-  gap: 0;
-  height: 100%;
+  align-items: center;
+  gap: 4px;
 }
 
 .nav-tab {
-  /* reset icon-btn sizing for text tabs */
-  width: auto !important;
-  height: 100% !important;
-  padding: 0 18px !important;
-  border: none !important;
-  border-bottom: 2px solid transparent !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.10em !important;
-  color: var(--text-muted) !important;
-  transition: color 0.15s ease, border-color 0.15s ease !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .nav-tab:hover {
-  color: var(--text-primary) !important;
-  background: transparent !important;
+  background: var(--overlay-light);
+  color: var(--text-primary);
 }
 
 .nav-tab.active {
-  color: var(--color-accent) !important;
-  border-bottom-color: var(--color-accent) !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-/* Settings gear button (right side of header) */
-.nav-settings-btn {
-  width: 32px !important;
-  height: 32px !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: 6px !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.nav-settings-btn.active {
-  background: var(--overlay-light) !important;
-  color: var(--color-accent) !important;
   border-color: var(--color-accent) !important;
-  box-shadow: none !important;
+  background: color-mix(in srgb, var(--color-accent) 28%, transparent) !important;
+  color: var(--text-primary) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06) !important;
 }
+
+.nav-tab.active:hover {
+  border-color: var(--color-accent) !important;
+  background: color-mix(in srgb, var(--color-accent) 34%, transparent) !important;
+  color: var(--text-primary) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08) !important;
+}
+
 
 #fx-library-toggle {
   background: linear-gradient(180deg, #3a5a3a 0%, #2a4a2a 100%);
@@ -274,7 +250,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 6px 8px;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
 
   align-items: stretch;
   flex-direction: column;
@@ -308,7 +284,7 @@
     gap: 4px;
     padding: 3px;
     border: 1px solid var(--border-light);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: color-mix(in srgb, var(--bg-secondary) 72%, transparent);
   }
 
@@ -317,7 +293,7 @@
     min-height: 30px;
     padding: 0 16px;
     border: 1px solid transparent;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     background: transparent;
     color: var(--text-secondary);
     font: inherit;
@@ -454,7 +430,7 @@
   min-height: 28px;
   min-width: 30px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   background: none;
   color: var(--text-dark-primary);
   cursor: pointer;
@@ -534,7 +510,7 @@
   flex-direction: column;
   gap: 2px;
   padding: 6px;
-  border-radius: 10px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--border-dark-medium);
   background: var(--bg-dark-secondary);
   box-shadow: var(--shadow-xl);
@@ -547,7 +523,7 @@
 .preset-extra-action-item {
   width: 100%;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   background: transparent;
   color: var(--text-dark-primary);
   text-align: left;
@@ -629,7 +605,7 @@
   gap: 0;
   padding: 2px 8px 2px 4px;
   height: 36px;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   background: var(--bg-dark-primary);
   border: 1px solid rgba(255,255,255,0.06);
   box-shadow:
@@ -649,7 +625,7 @@
   color: var(--text-dark-muted);
   white-space: nowrap;
   padding: 2px 7px;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   border: none;
   background: rgba(255,255,255,0.06);
   flex-shrink: 0;
@@ -726,7 +702,7 @@
   width: 28px;
   height: 28px;
   min-height: 28px;
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   border: 1px solid rgba(255,255,255,0.08) !important;
   background: rgba(255,255,255,0.05) !important;
   color: var(--text-dark-secondary) !important;

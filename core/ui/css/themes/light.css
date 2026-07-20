@@ -68,7 +68,7 @@
 
   /* Modal Surface Tokens */
   --modal-bg: #ffffff;
-  --modal-bg-raised: #f9fafb;
+  --modal-bg-raised: var(--modal-bg);
   --modal-text: #111318;
   --modal-text-secondary: #4b5563;
   --modal-text-muted: #8a91a2;

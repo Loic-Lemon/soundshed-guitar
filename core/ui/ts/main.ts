@@ -29,6 +29,7 @@ import { initializeRiffLibraryPanel } from "./riffLibrary.js";
 import { initMultiRigTab } from "./multiPresetMixer.js";
 import { applyBuildFlags } from "./buildFlags.js";
 import { hideSplashScreen, initSplashScreen } from "./splash.js";
+import { showStartPage } from "./startPage.js";
 import { FEATURE_FLAGS_CHANGED_EVENT } from "./featureFlags.js";
 import { initAlpineStores, startAlpine } from "./alpine.js";
 import { initializePerformancePads } from "./performancePads.js";
@@ -295,6 +296,10 @@ async function bootstrap(): Promise<void> {
 
   // Hide splash screen now that app is fully initialized
   await hideSplashScreen();
+
+  // Show the audio device setup start page
+  // (auto-detects standalone vs plugin vs local dev)
+  await showStartPage();
 }
 
 let bootstrapSettled = false;

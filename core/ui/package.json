@@ -6,6 +6,9 @@
     "build": "tsc -p tsconfig.json && node scripts/assemble-html.js",
     "build:html": "node scripts/assemble-html.js",
     "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "format": "prettier --write \"ts/**/*.ts\" \"css/**/*.css\" \"tests/**/*.ts\"",
+    "format:check": "prettier --check \"ts/**/*.ts\" \"css/**/*.css\" \"tests/**/*.ts\"",
     "postbuild": "node -e \"const fs=require('fs');const path=require('path');const src=path.join(__dirname,'node_modules','jszip','dist','jszip.min.js');const dst=path.join(__dirname,'dist','jszip.min.js');fs.copyFileSync(src,dst);\" && node -e \"const fs=require('fs');const path=require('path');const src=path.join(__dirname,'node_modules','alpinejs','dist','cdn.min.js');const dst=path.join(__dirname,'dist','alpine.min.js');fs.copyFileSync(src,dst); console.log('copied alpine.min.js');\""
   },
   "dependencies": {
@@ -14,6 +17,7 @@
   },
   "devDependencies": {
     "jsdom": "^29.1.1",
+    "prettier": "^3.4.2",
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"
   }

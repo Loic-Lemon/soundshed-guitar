@@ -40,6 +40,7 @@ import { triggerUpdateCheck } from "./updateCheck.js";
 import { getPresetSceneGraphs, normalizePresetScenes } from "./presetScenes.js";
 import { shouldMarkSignalPathNodeConfigUpdateDirty } from "./signalPathConfigUpdates.js";
 import { applyPerformancePadAppSettings, refreshPerformancePads } from "./performancePads.js";
+import { applyAudioDeviceList } from "./startPage.js";
 
 function normalizeResourceRef(ref?: ResourceRef | null): void {
   if (!ref) return;
@@ -1805,6 +1806,10 @@ export function handleIncomingMessage(message: string): void {
       if (deepLink.deepLink) {
         handleToneSharingDeepLink(deepLink.deepLink);
       }
+      break;
+    }
+    case "audioDeviceList": {
+      applyAudioDeviceList(payload as unknown as import("./startPage.js").AudioDeviceListPayload);
       break;
     }
     default:

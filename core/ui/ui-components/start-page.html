@@ -1,0 +1,59 @@
+    <!-- Start Page - Audio device setup shown after splash, before main app -->
+    <div id="start-page" class="start-page" role="dialog" aria-label="Audio device setup" hidden>
+      <div class="start-page-content">
+        <div class="start-page-header">
+          <div class="start-page-logo">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="2" opacity="0.2"/>
+              <path d="M 25 85 C 45 68, 65 68, 85 85 C 105 102, 125 102, 145 85 C 165 68, 180 75, 180 85" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 25 115 C 45 132, 65 132, 85 115 C 105 98, 125 98, 145 115 C 165 132, 180 125, 180 115" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h1 class="start-page-title">Fork: Soundshed Guitar</h1>
+          <p class="start-page-subtitle">Configure your audio devices to get started</p>
+        </div>
+
+        <div class="start-page-body">
+          <div class="start-page-device-row">
+            <label for="start-input-device">Audio Input</label>
+            <select id="start-input-device" class="start-page-select">
+              <option value="">Loading devices...</option>
+            </select>
+          </div>
+
+          <div class="start-page-device-row">
+            <label for="start-output-device">Audio Output</label>
+            <select id="start-output-device" class="start-page-select">
+              <option value="">Loading devices...</option>
+            </select>
+          </div>
+
+          <div class="start-page-config-row">
+            <div class="start-page-config-item">
+              <label for="start-sample-rate">Sample Rate</label>
+              <select id="start-sample-rate" class="start-page-select start-page-select-sm">
+                <option value="">—</option>
+              </select>
+            </div>
+            <div class="start-page-config-item">
+              <label for="start-buffer-size">Buffer Size</label>
+              <select id="start-buffer-size" class="start-page-select start-page-select-sm">
+                <option value="">—</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="start-page-error" class="start-page-error" hidden>
+            <span id="start-page-error-text"></span>
+          </div>
+        </div>
+
+        <div class="start-page-footer">
+          <button id="start-page-open-preferences" type="button" class="btn btn-secondary btn-sm">Open Audio Preferences</button>
+          <div class="start-page-footer-actions">
+            <button id="start-page-skip" type="button" class="btn btn-ghost">Skip</button>
+            <button id="start-page-continue" type="button" class="btn btn-primary">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -72,7 +72,7 @@ function getMetronomeElements(): {
     modal: panel,
     closeButton: document.getElementById("metronome-close-btn"),
     iconButton: document.querySelector<HTMLButtonElement>(
-      '.icon-bar .icon-btn[data-panel="metronome"]',
+      '.icon-bar .nav-tab[data-panel="metronome"]',
     ),
   };
 }

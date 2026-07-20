@@ -110,7 +110,7 @@ export function renderCustomLayout(
           width: ${w}px;
           height: ${h}px;
           overflow: hidden;
-          border-radius: 8px;
+          border-radius: var(--radius-xl);
           margin: 0;
           padding: 0;
           box-sizing: border-box;
@@ -274,7 +274,7 @@ export function renderCustomLayoutBackdrop(
           width: ${w}px;
           height: ${h}px;
           overflow: hidden;
-          border-radius: 8px;
+          border-radius: var(--radius-xl);
           margin: 0;
           padding: 0;
           box-sizing: border-box;

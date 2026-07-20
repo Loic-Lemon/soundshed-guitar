@@ -205,6 +205,14 @@
   --knob-pct: 0;
   --mapped-angle: 0deg;
 
+  /* Border Radius Scale */
+  --radius-sm: 1px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 4px;
+  --radius-full: 999px;
+  --radius-round: 50%;
+
   --bg-control: #e8eaef;
   --button-bg: linear-gradient(180deg, #edeef2 0%, #dfe1e8 100%);
   --button-text: #3a3a40;
@@ -213,15 +221,15 @@
   --button-border-hover: #b4b8c6;
 
   /* Modal Surface Tokens */
-  --modal-bg: linear-gradient(180deg, #2a2a30 0%, #1e1e24 100%);
-  --modal-bg-raised: linear-gradient(180deg, #3a3a44 0%, #2e2e38 100%);
+  --modal-bg: #242429;
+  --modal-bg-raised: var(--modal-bg);
   --modal-text: #e0e0f0;
   --modal-text-secondary: #c0c0d0;
   --modal-text-muted: #a0a0b0;
   --modal-border: #4a4a58;
   --modal-border-medium: #3a3a44;
   --modal-close-hover: rgba(255, 255, 255, 0.08);
-  --modal-input-bg: linear-gradient(180deg, #38384a 0%, #2e2e3a 100%);
+  --modal-input-bg: #333342;
   --modal-input-text: #e0e0f0;
   --modal-input-border: #3a3a44;
   --modal-input-placeholder: #a0a0b0;

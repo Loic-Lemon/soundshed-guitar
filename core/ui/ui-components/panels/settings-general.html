@@ -5,12 +5,12 @@
               <h3>Audio Device</h3>
               <div class="settings-row settings-row-two" id="open-audio-preferences-row">
                 <label for="open-audio-preferences">Preferences</label>
-                <button id="open-audio-preferences" type="button">Open Audio Preferences</button>
+                <button id="open-audio-preferences" type="button" class="btn btn-primary btn-sm">Open Audio Preferences</button>
               </div>
               <div class="settings-hint" id="open-audio-preferences-hint">Opens the native audio/MIDI device settings dialog for the standalone app.</div>
               <div class="settings-row">
                 <label for="run-signal-test">Signal Path Test</label>
-                <button id="run-signal-test" type="button">Run Signal Path Test</button>
+                <button id="run-signal-test" type="button" class="btn btn-primary btn-sm">Run Signal Path Test</button>
               </div>
             </div>
            
@@ -28,14 +28,14 @@
               <div class="settings-hint" id="tone3000-api-mode-status">Connection mode: Direct Tone3000 API</div>
               <div class="settings-row" id="tone3000-proxy-health-row">
                 <label for="tone3000-proxy-health-check">API Health</label>
-                <button id="tone3000-proxy-health-check" type="button" class="secondary">Check API Health</button>
+                <button id="tone3000-proxy-health-check" type="button" class="btn btn-secondary btn-sm">Check API Health</button>
               </div>
               <div class="settings-hint" id="tone3000-proxy-health-status">API health: not checked.</div>
               <div class="settings-row" id="tone3000-api-key-row">
                 <label for="tone3000-api-key-input">API Key</label>
                 <input type="password" id="tone3000-api-key-input" placeholder="Enter your Tone3000 API key (Settings > Legacy API Key)" />
-                <button id="tone3000-api-key-save">Save</button>
-                <button id="tone3000-api-key-clear" class="secondary">Clear</button>
+                <button id="tone3000-api-key-save" class="btn btn-primary btn-sm">Save</button>
+                <button id="tone3000-api-key-clear" class="btn btn-secondary btn-sm">Clear</button>
               </div>
             </div>
             <h2 id="settings-library-tools-heading">Library</h2>
@@ -47,7 +47,7 @@
                   <option value="used" selected>Only resources used by presets</option>
                   <option value="all">All resources in library</option>
                 </select>
-                <button id="library-export-btn" type="button">Export Library</button>
+                <button id="library-export-btn" type="button" class="btn btn-primary btn-sm">Export Library</button>
                 <span class="settings-unit">.soundshed-library.zip</span>
               </div>
               <div class="settings-hint">Exports all presets and blends, plus IR/NAM files from the library based on the selected scope.</div>
@@ -57,7 +57,7 @@
             <div class="settings-section">
               <h3>Current Version</h3>
               <div class="settings-row">
-                <label>Soundshed Guitar</label>
+                <label>Fork: Soundshed Guitar</label>
                 <span id="current-version-display" class="version-display">—</span>
               </div>
               <h3>App Updates</h3>
@@ -68,7 +68,7 @@
                   <span class="toggle-slider"></span>
                 </label>
               </div>
-              <div class="settings-hint">Automatically checks if a new version of Soundshed Guitar is available.</div>
+              <div class="settings-hint">Automatically checks if a new version of Fork: Soundshed Guitar is available.</div>
             </div>
  <div class="settings-section">
               <h3>Advanced DSP Level Targets</h3>

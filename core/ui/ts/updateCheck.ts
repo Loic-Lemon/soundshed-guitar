@@ -151,7 +151,7 @@ function showUpdateAvailable(data: UpdateCheckResult): void {
       badge = document.createElement("span");
       badge.className = "update-badge";
       badge.textContent = "1";
-      badge.style.cssText = "position: absolute; top: -5px; right: -5px; background: var(--accent-color, #ff4444); color: white; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; pointer-events: none;";
+      badge.style.cssText = "position: absolute; top: -5px; right: -5px; background: var(--accent-color, #ff4444); color: white; border-radius: var(--radius-round); padding: 2px 6px; font-size: 10px; font-weight: bold; pointer-events: none;";
       settingsBtn.style.position = "relative";
       settingsBtn.appendChild(badge);
     }
@@ -181,8 +181,8 @@ function createUpdateModal(data: UpdateCheckResult): void {
           <button class="icon-btn" id="update-modal-close">&times;</button>
         </div>
         <div class="modal-body">
-          <p>A new version of Soundshed Guitar is available: <strong>${data.latest_version}</strong></p>
-          <div class="release-notes" style="margin-top: 15px; max-height: 200px; overflow-y: auto; background: var(--bg-color-dark, rgba(0,0,0,0.1)); padding: 10px; border-radius: 4px; font-size: 0.9em;">
+          <p>A new version of Fork: Soundshed Guitar is available: <strong>${data.latest_version}</strong></p>
+          <div class="release-notes" style="margin-top: 15px; max-height: 200px; overflow-y: auto; background: var(--bg-color-dark, rgba(0,0,0,0.1)); padding: 10px; border-radius: var(--radius-md); font-size: 0.9em;">
             ${renderMarkdown(data.release_notes || "No release notes provided.")}
           </div>
         </div>

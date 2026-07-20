@@ -42,7 +42,7 @@
   justify-content: flex-start;
   text-align: left;
   padding: 9px 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   border: 1px solid transparent;
   background: transparent;
   color: var(--text-secondary);
@@ -78,7 +78,7 @@
 .tone-sharing-share-hint {
   margin: 0;
   border: 1px solid color-mix(in srgb, var(--border-medium), transparent 18%);
-  border-radius: 10px;
+  border-radius: var(--radius-xl);
   background: color-mix(in srgb, var(--bg-panel), #000 6%);
   color: var(--text-muted);
   font-size: 11px;
@@ -113,7 +113,7 @@
   background: var(--button-bg);
   color: var(--button-text);
   border: 1px solid var(--button-border);
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   padding: 5px 12px;
   cursor: pointer;
   font-size: 12px;
@@ -128,7 +128,7 @@
   background: var(--bg-control);
   color: var(--text-primary);
   border: 1px solid var(--border-medium);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 5px 13px;
   cursor: pointer;
   font-size: 12px;
@@ -181,7 +181,7 @@
   min-width: 200px;
   background: var(--bg-input);
   border: 1px solid var(--border-medium);
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   color: var(--text-primary);
   padding: 8px;
   font-size: 12px;
@@ -199,7 +199,7 @@
 .tone-sharing-card {
   background: color-mix(in srgb, var(--bg-panel), #000 8%);
   border: 1px solid var(--border-medium);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 12px;
   display: flex;
   flex-direction: column;
@@ -248,7 +248,7 @@
   width: 100%;
   background: var(--bg-input);
   border: 1px solid var(--border-medium);
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   color: var(--text-primary);
   padding: 8px;
   font-size: 12px;
@@ -269,7 +269,7 @@
   background: var(--button-bg);
   color: var(--button-text);
   border: 1px solid var(--button-border);
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   padding: 8px 10px;
   cursor: pointer;
 }
@@ -316,7 +316,7 @@
 
 .tone-sharing-pack-view-content {
   background: var(--modal-bg, var(--bg-panel));
-  border-radius: 14px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   width: min(620px, 100%);
   max-height: 88vh;
@@ -344,7 +344,7 @@
   right: 12px;
   background: rgba(0, 0, 0, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   color: #fff;
   cursor: pointer;
   font-size: 16px;
@@ -377,7 +377,7 @@
   color: var(--accent-primary);
   background: color-mix(in srgb, var(--accent-primary), transparent 82%);
   border: 1px solid color-mix(in srgb, var(--accent-primary), transparent 55%);
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   padding: 2px 7px;
   margin-bottom: 8px;
 }
@@ -424,7 +424,7 @@
   align-items: center;
   gap: 10px;
   padding: 9px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--border-light);
   background: color-mix(in srgb, var(--bg-control), transparent 40%);
   transition: border-color 0.12s, background 0.12s;
@@ -520,7 +520,7 @@
   --tone-pack-thumbnail: none;
   background: linear-gradient(180deg, color-mix(in srgb, var(--bg-control), #000 6%) 0%, color-mix(in srgb, var(--bg-control), #000 14%) 100%);
   border: 1px solid var(--border-medium);
-  border-radius: 10px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -624,7 +624,7 @@
 .tone-sharing-card-creator-avatar {
   width: 16px;
   height: 16px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   object-fit: cover;
   border: 1px solid color-mix(in srgb, var(--border-medium), transparent 28%);
   background: color-mix(in srgb, var(--bg-control), #000 10%);
@@ -648,7 +648,7 @@
   display: inline-flex;
   align-items: center;
   border: 1px solid color-mix(in srgb, var(--border-medium), transparent 30%);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 1px 6px;
   font-size: 9px;
   background: color-mix(in srgb, var(--bg-control), #fff 2%);
@@ -664,7 +664,7 @@
   display: inline-flex;
   align-items: baseline;
   gap: 4px;
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   padding: 2px 6px;
   font-size: 10px;
   border: 1px solid color-mix(in srgb, var(--border-light), transparent 20%);
@@ -707,7 +707,7 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   padding: 3px 8px;
   border: 1px solid var(--border-medium);
 }
@@ -755,7 +755,7 @@
   padding: 4px 7px;
   font-size: 9px;
   font-weight: 500;
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -768,7 +768,7 @@
   height: 24px;
   min-width: 24px;
   padding: 0;
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
 }
 
 .tone-sharing-card-btn[data-action="download"]:disabled,
@@ -800,7 +800,7 @@
   height: 10px;
   border: 2px solid currentColor;
   border-top-color: transparent;
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   animation: tone-sharing-spin 0.8s linear infinite;
   flex-shrink: 0;
 }
@@ -824,7 +824,7 @@
   gap: 8px;
   background: color-mix(in srgb, var(--accent-primary), transparent 80%);
   border: 1px solid color-mix(in srgb, var(--accent-primary), transparent 45%);
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   padding: 5px 10px;
   font-size: 12px;
   color: var(--text-primary);
@@ -843,7 +843,7 @@
 .tone-sharing-preview-clear {
   background: transparent;
   border: 1px solid var(--border-medium);
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   color: var(--text-muted);
   cursor: pointer;
   font-size: 12px;
@@ -861,7 +861,7 @@
   max-height: 140px;
   overflow: auto;
   border: 1px solid var(--border-medium);
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   background: var(--bg-control);
 }
 
@@ -910,7 +910,7 @@
   width: 100%;
   background: var(--bg-control);
   border: 1px solid var(--border-medium);
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   color: var(--text-primary);
   padding: 6px;
   font-size: 12px;
@@ -925,7 +925,7 @@
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--border-light);
   background: color-mix(in srgb, var(--bg-control), transparent 14%);
   font-size: 12px;
@@ -935,7 +935,7 @@
 .tone-sharing-progress-spinner {
   width: 14px;
   height: 14px;
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   border: 2px solid color-mix(in srgb, var(--accent-primary), transparent 70%);
   border-top-color: var(--accent-primary);
   animation: tone-sharing-spin 0.8s linear infinite;
@@ -1021,7 +1021,7 @@
 .tone-sharing-avatar-preview {
   width: 44px;
   height: 44px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   border: 1px solid var(--border-medium);
   object-fit: cover;
   background: color-mix(in srgb, var(--bg-panel), #000 10%);
@@ -1055,7 +1055,7 @@
   min-width: 0;
   background: var(--bg-input);
   border: 1px solid var(--border-medium);
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   color: var(--text-primary);
   padding: 6px 8px;
   font-size: 12px;
@@ -1081,7 +1081,7 @@
   gap: 8px;
   background: color-mix(in srgb, var(--bg-panel), #000 6%);
   border: 1px solid var(--border-medium);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   padding: 16px;
 }
 
@@ -1110,7 +1110,7 @@
 .ai-tone-input-group input {
   background: var(--bg-input);
   border: 1px solid var(--border-medium);
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   color: var(--text-primary);
   padding: 8px 10px;
   font-size: 13px;
@@ -1151,7 +1151,7 @@
 .ai-tone-combo-card {
   background: color-mix(in srgb, var(--bg-panel), #000 8%);
   border: 1px solid var(--border-medium);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1214,7 +1214,7 @@
   display: inline-block;
   font-size: 11px;
   padding: 2px 8px;
-  border-radius: 10px;
+  border-radius: var(--radius-xl);
   background: var(--overlay-medium, rgba(255,255,255,0.08));
   border: 1px solid var(--border-light);
   color: var(--text-secondary);
@@ -1228,7 +1228,7 @@
   display: inline-block;
   font-size: 11px;
   padding: 2px 8px;
-  border-radius: 10px;
+  border-radius: var(--radius-xl);
   background: var(--overlay-medium, rgba(255,255,255,0.08));
   border: 1px solid var(--border-light);
   color: var(--text-secondary);
@@ -1373,7 +1373,7 @@
 .tone-sharing-tag-chip {
   font-size: 11px;
   padding: 3px 10px;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--border-dark);
   background: transparent;
   color: var(--text-secondary);
@@ -1397,7 +1397,7 @@
   display: inline-block;
   font-size: 10px;
   padding: 1px 6px;
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   background: var(--overlay-medium, rgba(255,255,255,0.1));
   color: var(--text-secondary);
   letter-spacing: 0.02em;
@@ -1431,7 +1431,7 @@
 .tone-sharing-tag-chip {
   font-size: 11px;
   padding: 3px 10px;
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--border-dark);
   background: transparent;
   color: var(--text-secondary);
@@ -1455,7 +1455,7 @@
   display: inline-block;
   font-size: 10px;
   padding: 1px 6px;
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   background: var(--overlay-medium, rgba(255,255,255,0.1));
   color: var(--text-secondary);
   letter-spacing: 0.02em;

@@ -84,10 +84,10 @@ AU_DST="${DIST_DIR}/Library/Audio/Plug-Ins/Components"
 CLAP_DST="${DIST_DIR}/Library/Audio/Plug-Ins/CLAP"
 AAX_DST="${DIST_DIR}/Library/Application Support/Avid/Audio/Plug-Ins"
 
-PRODUCT="Soundshed Guitar"
+PRODUCT="Fork: Soundshed Guitar"
 
 echo "═══════════════════════════════════════════════════"
-echo "  Soundshed Guitar — macOS Distribution Build"
+echo "  Fork: Soundshed Guitar — macOS Distribution Build"
 echo "  Dist dir: ${DIST_DIR}"
 [[ "$UNIVERSAL" == true ]] && echo "  Architecture: universal (arm64 + x86_64)" || echo "  Architecture: native host (${HOST_ARCH})"
 [[ "$BUILD_PKG"  == true ]] && echo "  Installer .pkg: yes"
@@ -371,7 +371,7 @@ if [[ "$BUILD_PKG" == true ]]; then
     cat > "$DIST_XML" <<DISTXML
 <?xml version="1.0" encoding="utf-8"?>
 <installer-gui-script minSpecVersion="2">
-    <title>Soundshed Guitar ${VERSION}</title>
+    <title>Fork: Soundshed Guitar ${VERSION}</title>
     <organization>com.soundshed</organization>
     <domains enable_localSystem="true"/>
     <options customize="always" require-scripts="true" rootVolumeOnly="true"/>
@@ -386,7 +386,7 @@ if [[ "$BUILD_PKG" == true ]]; then
 
     <!-- Optional formats: user can deselect any of these -->
     <choice id="choice-standalone" title="Standalone App"
-            description="Soundshed Guitar standalone application."
+            description="Fork: Soundshed Guitar standalone application."
             selected="true">
         <pkg-ref id="com.soundshed.guitar.standalone"/>
     </choice>

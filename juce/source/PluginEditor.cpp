@@ -452,10 +452,10 @@ PluginEditor::PluginEditor (PluginProcessorAdapter& p)
         const juce::String missingRuntimeHtml =
             "data:text/html;charset=UTF-8,"
             "<!doctype html><html><head><meta charset='utf-8'/>"
-            "<title>Soundshed Guitar</title></head>"
+            "<title>Fork: Soundshed Guitar</title></head>"
             "<body style='font-family:sans-serif;background:#101014;color:#eee;padding:24px;line-height:1.5;'>"
             "<h2>Microsoft Edge WebView2 Runtime is required</h2>"
-            "<p>The Soundshed Guitar UI cannot start because WebView2 is not available.</p>"
+            "<p>The Fork: Soundshed Guitar UI cannot start because WebView2 is not available.</p>"
             "<p>Install the runtime, then restart the app.</p>"
             "<p>Download: <a href='https://aka.ms/webview2' style='color:#8ab4ff;'>https://aka.ms/webview2</a></p>"
             "</body></html>";
@@ -579,7 +579,7 @@ std::optional<juce::WebBrowserComponent::Resource> PluginEditor::getResource (co
         writeStartupLog ("[getResource] serving fallback index.html (resources not found)");
         const juce::String fallbackHtml =
             "<!doctype html><html><head><meta charset=\"utf-8\"/>"
-            "<title>Soundshed Guitar</title></head>"
+            "<title>Fork: Soundshed Guitar</title></head>"
             "<body style=\"font-family:sans-serif;background:#101014;color:#eee;padding:24px;\">"
             "<h1>UI not found</h1><p>Expected resources/ui/index.html on disk.</p>"
             "<p>Resource root: "
@@ -643,7 +643,7 @@ void PluginEditor::showLinuxWebViewDependencyMessage (const juce::String& reason
     }
 
     const juce::String message =
-        "The Soundshed Guitar UI could not be displayed in the embedded browser on Linux.\n\n"
+        "The Fork: Soundshed Guitar UI could not be displayed in the embedded browser on Linux.\n\n"
         "Please confirm the required app dependencies are installed.\n"
         "See guitar.soundshed.com for details.\n\n"
         "Details: "

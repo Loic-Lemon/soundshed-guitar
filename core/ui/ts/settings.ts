@@ -96,9 +96,9 @@ const userInputCalibrationLivePeak = document.getElementById("user-input-calibra
 const userInputCalibrationCapturedPeak = document.getElementById("user-input-calibration-captured-peak") as HTMLElement | null;
 const userInputCalibrationRecommendedTrim = document.getElementById("user-input-calibration-recommended-trim") as HTMLElement | null;
 const userInputCalibrationStatus = document.getElementById("user-input-calibration-status") as HTMLElement | null;
-const equipmentTabButtons = Array.from(document.querySelectorAll(".equipment-tab-btn"));
+const equipmentTabButtons = Array.from(document.querySelectorAll(".tab-btn-vertical[data-equipment-tab]"));
 const equipmentTabPanels = Array.from(document.querySelectorAll(".equipment-tab-panel"));
-const equipmentLibraryTabButton = document.querySelector('.equipment-tab-btn[data-equipment-tab="library"]') as HTMLElement | null;
+const equipmentLibraryTabButton = document.querySelector('.tab-btn-vertical[data-equipment-tab="library"]') as HTMLElement | null;
 const themeSelect = document.getElementById("theme-select") as HTMLSelectElement | null;
 const zoomLevelSelect = document.getElementById("zoom-level-select") as HTMLSelectElement | null;
 const librarySearchInput = document.getElementById("equipment-library-search") as HTMLInputElement | null;
@@ -148,8 +148,8 @@ const tone3000SettingsHeading = document.getElementById("settings-tone3000-headi
 const tone3000SettingsSection = document.getElementById("settings-tone3000-section") as HTMLElement | null;
 const libraryToolsHeading = document.getElementById("settings-library-tools-heading") as HTMLElement | null;
 const libraryToolsSection = document.getElementById("settings-library-tools-section") as HTMLElement | null;
-const sharingPanelButton = document.querySelector('.icon-btn[data-panel="sharing"]') as HTMLElement | null;
-const jamPanelButton = document.querySelector('.icon-btn[data-panel="jam"]') as HTMLElement | null;
+const sharingPanelButton = document.querySelector('.nav-tab[data-panel="sharing"]') as HTMLElement | null;
+const jamPanelButton = document.querySelector('.nav-tab[data-panel="jam"]') as HTMLElement | null;
 const sharingPanel = document.getElementById("panel-sharing") as HTMLElement | null;
 const jamPanel = document.getElementById("panel-jam") as HTMLElement | null;
 const jamPlayerDock = document.getElementById("jam-player-dock") as HTMLElement | null;
@@ -363,7 +363,7 @@ function ensureVisibleMainPanel(): void {
     return;
   }
 
-  (document.querySelector('.icon-btn[data-panel="visualizer"]') as HTMLButtonElement | null)?.click();
+  (document.querySelector('.nav-tab[data-panel="visualizer"]') as HTMLButtonElement | null)?.click();
 }
 
 function isLibraryTabEnabled(tabId: string): boolean {
@@ -552,6 +552,8 @@ export function initThemeSelect(): void {
     { value: "light", label: "Light" },
     { value: "dark", label: "Dark" },
     { value: "classic", label: "Vintage" },
+    { value: "light1", label: "Light 1" },
+    { value: "dark1", label: "Dark 1" },
   ];
 
   themeSelect.innerHTML = themes

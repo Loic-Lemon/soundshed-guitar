@@ -775,7 +775,7 @@ export function renderPresetDetails(
     performanceLink.addEventListener("click", () => {
       const settingsButton = document.querySelector(".icon-bar .icon-btn[data-panel=\"settings\"]") as HTMLElement | null;
       settingsButton?.click();
-      const performanceTabButton = document.querySelector(".equipment-tab-btn[data-equipment-tab=\"performance\"]") as HTMLElement | null;
+      const performanceTabButton = document.querySelector(".tab-btn-vertical[data-equipment-tab=\"performance\"]") as HTMLElement | null;
       performanceTabButton?.click();
     });
   }

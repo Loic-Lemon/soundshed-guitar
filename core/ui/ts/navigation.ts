@@ -10,7 +10,7 @@ import { Features, isFeatureEnabled, isJamExperienceEnabled } from "./featureFla
 
 function getTabButtons() { return Array.from(document.querySelectorAll(".tab-button")); }
 function getTabPanels() { return Array.from(document.querySelectorAll(".tab-panel")); }
-function getPanelSwitchButtons() { return Array.from(document.querySelectorAll(".icon-bar .icon-btn, .panel-switch")); }
+function getPanelSwitchButtons() { return Array.from(document.querySelectorAll(".icon-bar .nav-tab, .icon-bar .icon-btn, .panel-switch")); }
 function getMainTabPanels() { return Array.from(document.querySelectorAll(".main-content .tab-panel")); }
 function getPadsFooterButtons(): HTMLButtonElement[] {
   const buttons = [

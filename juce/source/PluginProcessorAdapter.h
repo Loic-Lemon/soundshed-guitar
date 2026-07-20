@@ -93,6 +93,12 @@ public:
     void handleWebMessage (const juce::String& message);
     void sendMessageToUI (const juce::String& message);
 
+    // ── Audio device management (standalone only) ──────────────────
+    /// Set the AudioDeviceManager for standalone builds.
+    /// Called by MainWindow during construction.
+    static void setStandaloneDeviceManager (juce::AudioDeviceManager* mgr);
+    [[nodiscard]] static juce::AudioDeviceManager* getStandaloneDeviceManager();
+
     // ── Accessors ──────────────────────────────────────────────────
     [[nodiscard]] guitarfx::PluginController& getController() { return mController; }
 
@@ -101,6 +107,7 @@ private:
     void ensureStandaloneProtocolHandlerRegistration();
 
     // ── State ──────────────────────────────────────────────────────
+    static juce::AudioDeviceManager* sStandaloneDeviceManager;
     guitarfx::PluginController mController;
 
     std::function<void (const juce::String&)> mWebMessageCallback;

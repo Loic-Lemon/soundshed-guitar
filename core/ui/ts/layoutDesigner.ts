@@ -2718,7 +2718,7 @@ export class LayoutDesignerModal {
               margin-bottom: 4px;
               background: rgba(255, 255, 255, 0.05);
               border: 1px solid rgba(255, 255, 255, 0.1);
-              border-radius: 4px;
+              border-radius: var(--radius-md);
               color: var(--text-dark-primary);
               font-size: 12px;
               cursor: pointer;
@@ -2745,7 +2745,7 @@ export class LayoutDesignerModal {
                 margin-bottom: 4px;
                 background: rgba(255, 255, 255, 0.05);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 4px;
+                border-radius: var(--radius-md);
                 color: var(--text-dark-primary);
                 font-size: 12px;
                 cursor: pointer;

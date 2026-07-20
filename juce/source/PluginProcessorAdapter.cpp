@@ -7,6 +7,8 @@
  */
 
 #include "PluginProcessorAdapter.h"
+
+#include <juce_audio_devices/juce_audio_devices.h>
 #include "JuceHostedPluginEffect.h"
 #include "PluginEditor.h" // existing editor, unchanged
 #include "UiBridge.h"
@@ -848,17 +850,74 @@ void PluginProcessorAdapter::setWebMessageCallback (
 
 void PluginProcessorAdapter::handleWebMessage (const juce::String& message)
 {
-    // Handle openUrl locally — open in the system default browser.
     const auto parsed = juce::JSON::parse (message);
     if (auto* obj = parsed.getDynamicObject(); obj != nullptr)
     {
         const auto typeId = juce::Identifier { "type" };
-        const auto urlId = juce::Identifier { "url" };
-        if (obj->getProperty (typeId).toString() == "openUrl")
+        const auto type = obj->getProperty (typeId).toString();
+
+        // Handle openUrl locally — open in the system default browser.
+        if (type == "openUrl")
         {
+            const auto urlId = juce::Identifier { "url" };
             const auto url = obj->getProperty (urlId).toString();
             if (url.startsWith ("https://") || url.startsWith ("http://"))
                 juce::URL (url).launchInDefaultBrowser();
+            return;
+        }
+
+        // Handle audio device enumeration (standalone only)
+        if (type == "getAudioDevices")
+        {
+            if (auto* mgr = getStandaloneDeviceManager())
+            {
+                nlohmann::json response;
+                response["type"] = "audioDeviceList";
+                buildAudioDeviceListResponse (*mgr, response);
+                sendMessageToUI (juce::String (response.dump()));
+            }
+            return;
+        }
+
+        // Handle audio device selection (standalone only)
+        if (type == "setAudioDevice")
+        {
+            if (auto* mgr = getStandaloneDeviceManager())
+            {
+                const auto inputNameId = juce::Identifier { "inputDeviceName" };
+                const auto outputNameId = juce::Identifier { "outputDeviceName" };
+                const auto typeNameId = juce::Identifier { "deviceTypeName" };
+                const auto sampleRateId = juce::Identifier { "sampleRate" };
+                const auto bufferSizeId = juce::Identifier { "bufferSize" };
+
+                const auto inputDeviceName = obj->getProperty (inputNameId).toString();
+                const auto outputDeviceName = obj->getProperty (outputNameId).toString();
+                const auto deviceTypeName = obj->getProperty (typeNameId).toString();
+                const double sampleRate = obj->getProperty (sampleRateId).toString().getDoubleValue();
+                const auto bufferSize = static_cast<int> (obj->getProperty (bufferSizeId).toString().getIntValue());
+
+                // Change device type if needed
+                if (deviceTypeName.isNotEmpty() && deviceTypeName != mgr->getCurrentDeviceType())
+                    mgr->setCurrentAudioDeviceType (deviceTypeName, true);
+
+                juce::AudioDeviceManager::AudioDeviceSetup setup;
+                mgr->getAudioDeviceSetup (setup);
+                if (inputDeviceName.isNotEmpty())
+                    setup.inputDeviceName = inputDeviceName;
+                if (outputDeviceName.isNotEmpty())
+                    setup.outputDeviceName = outputDeviceName;
+                if (sampleRate > 0)
+                    setup.sampleRate = sampleRate;
+                if (bufferSize > 0)
+                    setup.bufferSize = bufferSize;
+                mgr->setAudioDeviceSetup (setup, true);
+
+                // Send back updated device list
+                nlohmann::json response;
+                response["type"] = "audioDeviceList";
+                buildAudioDeviceListResponse (*mgr, response);
+                sendMessageToUI (juce::String (response.dump()));
+            }
             return;
         }
     }
@@ -901,6 +960,90 @@ std::filesystem::path PluginProcessorAdapter::locateAssetsRoot() const
     }
 
     return guitarfx::ui::ResolveResourceRoot (candidates);
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// Standalone audio device management
+// ════════════════════════════════════════════════════════════════════════
+
+juce::AudioDeviceManager* PluginProcessorAdapter::sStandaloneDeviceManager = nullptr;
+
+void PluginProcessorAdapter::setStandaloneDeviceManager (juce::AudioDeviceManager* mgr)
+{
+    sStandaloneDeviceManager = mgr;
+}
+
+juce::AudioDeviceManager* PluginProcessorAdapter::getStandaloneDeviceManager()
+{
+    return sStandaloneDeviceManager;
+}
+
+static void buildAudioDeviceListResponse (juce::AudioDeviceManager& mgr, nlohmann::json& response)
+{
+    auto* currentDevice = mgr.getCurrentAudioDevice();
+    const auto currentTypeName = mgr.getCurrentDeviceType();
+
+    nlohmann::json inputDevices = nlohmann::json::array();
+    nlohmann::json outputDevices = nlohmann::json::array();
+
+    for (auto* type : mgr.getAvailableDeviceTypes())
+    {
+        if (type == nullptr)
+            continue;
+
+        const auto typeName = type->getTypeName().toStdString();
+
+        // Enumerate input devices
+        const auto inputNames = type->getDeviceNames (true);
+        for (auto& name : inputNames)
+        {
+            nlohmann::json entry;
+            entry["name"] = name.toStdString();
+            entry["typeName"] = typeName;
+            inputDevices.push_back (std::move (entry));
+        }
+
+        // Enumerate output devices
+        const auto outputNames = type->getDeviceNames (false);
+        for (auto& name : outputNames)
+        {
+            nlohmann::json entry;
+            entry["name"] = name.toStdString();
+            entry["typeName"] = typeName;
+            outputDevices.push_back (std::move (entry));
+        }
+    }
+
+    response["inputDevices"] = std::move (inputDevices);
+    response["outputDevices"] = std::move (outputDevices);
+    response["deviceTypeName"] = currentTypeName.toStdString();
+
+    if (currentDevice != nullptr)
+    {
+        response["currentInputDeviceName"] = currentDevice->getInputDeviceName().toStdString();
+        response["currentOutputDeviceName"] = currentDevice->getOutputDeviceName().toStdString();
+        response["currentSampleRate"] = currentDevice->getCurrentSampleRate();
+        response["currentBufferSize"] = currentDevice->getCurrentBufferSizeSamples();
+
+        nlohmann::json sampleRates = nlohmann::json::array();
+        for (auto rate : currentDevice->getAvailableSampleRates())
+            sampleRates.push_back (rate);
+        response["sampleRates"] = std::move (sampleRates);
+
+        nlohmann::json bufferSizes = nlohmann::json::array();
+        for (auto size : currentDevice->getAvailableBufferSizes())
+            bufferSizes.push_back (size);
+        response["bufferSizes"] = std::move (bufferSizes);
+    }
+    else
+    {
+        response["currentInputDeviceName"] = "";
+        response["currentOutputDeviceName"] = "";
+        response["currentSampleRate"] = 0;
+        response["currentBufferSize"] = 0;
+        response["sampleRates"] = nlohmann::json::array();
+        response["bufferSizes"] = nlohmann::json::array();
+    }
 }
 
 // ════════════════════════════════════════════════════════════════════════

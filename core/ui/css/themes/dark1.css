@@ -1,0 +1,211 @@
+/* ===== Dark 1 Theme =====
+ * Based on research-website dark mode palette.
+ */
+
+.theme-dark1 {
+  --color-accent: #e1c89b;
+  --color-accent-hover: #e8d4ad;
+  --color-accent-dark: #c9ad7a;
+  --color-accent-rgb: 225, 200, 155;
+
+  --color-success: #6a9e7a;
+  --color-success-light: #7db08c;
+  --color-success-glow: rgba(106, 158, 122, 0.4);
+  --color-info: #7a8da8;
+  --color-info-light: #8da0b8;
+
+  --bg-primary: #0d0f17;
+  --bg-secondary: #141620;
+  --bg-tertiary: #1c1e28;
+  --bg-surface: #141620;
+  --bg-elevated: #1c1e28;
+
+  --bg-panel: #1c1e28;
+  --bg-card: #141620;
+  --bg-input: #1c1e28;
+
+  --bg-dark-primary: #0a0c12;
+  --bg-dark-secondary: #101218;
+  --bg-dark-tertiary: #141620;
+  --bg-dark-surface: #1c1e28;
+
+  --bg-footer: #141620;
+  --bg-header-dark: #0a0c12;
+
+  --bg-fx-primary: #0d0f17;
+  --bg-fx-secondary: #141620;
+  --bg-fx-categories: #0a0c12;
+
+  --text-primary: #eef0fa;
+  --text-secondary: #c8cbd7;
+  --text-tertiary: #a8abb8;
+  --text-muted: #9a9db0;
+
+  --text-dark-primary: #eef0fa;
+  --text-dark-secondary: #c8cbd7;
+  --text-dark-tertiary: #a8abb8;
+  --text-dark-muted: #9a9db0;
+  --text-dark-dimmed: #7a7d90;
+  --text-dark-disabled: #5a5d70;
+
+  --border-light: #262834;
+  --border-medium: #30323e;
+  --border-strong: #3a3c48;
+  --border-dark: #20222e;
+  --border-darker: #181a24;
+
+  --border-dark-light: #30323e;
+  --border-dark-medium: #3a3c48;
+  --border-dark-strong: #444650;
+
+  --bg-browser-shell: rgba(13, 15, 23, 0.52);
+  --bg-browser-header: rgba(20, 22, 32, 0.64);
+  --bg-browser-sidebar: rgba(16, 18, 28, 0.6);
+  --bg-browser-card: rgba(28, 30, 40, 0.5);
+  --bg-browser-input: rgba(20, 22, 32, 0.72);
+  --bg-browser-hover: rgba(238, 240, 250, 0.08);
+  --bg-browser-selected: rgba(225, 200, 155, 0.16);
+  --border-browser: rgba(38, 40, 52, 0.6);
+  --border-browser-strong: rgba(48, 50, 62, 0.75);
+
+  --accent-primary: var(--color-accent);
+  --bg-control: #1c1e28;
+  --button-bg: #1c1e28;
+  --button-text: #eef0fa;
+  --button-border: #30323e;
+  --button-bg-hover: #242632;
+  --button-border-hover: #3a3c48;
+
+  --modal-bg: #141620;
+  --modal-bg-raised: var(--modal-bg);
+  --modal-text: #eef0fa;
+  --modal-text-secondary: #c8cbd7;
+  --modal-text-muted: #9a9db0;
+  --modal-border: #30323e;
+  --modal-border-medium: #262834;
+  --modal-close-hover: rgba(238, 240, 250, 0.08);
+  --modal-input-bg: #1c1e28;
+  --modal-input-text: #eef0fa;
+  --modal-input-border: #30323e;
+  --modal-input-placeholder: #9a9db0;
+
+  --control-bg: #1c1e28;
+  --control-knob-bg: #1c1e28;
+  --control-border: #30323e;
+  --control-indicator: #c8cbd7;
+  --knob-border-highlight: rgba(238, 240, 250, 0.14);
+  --knob-border-shadow: rgba(0, 0, 0, 0.4);
+  --knob-ring-color: #e1c89b;
+  --knob-ring-track: rgba(225, 200, 155, 0.15);
+
+  --toggle-bg: #30323e;
+  --toggle-border: #3a3c48;
+  --toggle-active: var(--color-accent);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.45);
+
+  --shadow-inset-light: inset 0 1px 0 rgba(238, 240, 250, 0.06);
+  --shadow-inset-dark: inset 0 -2px 0 rgba(0, 0, 0, 0.3);
+
+  --overlay-light: rgba(238, 240, 250, 0.06);
+  --overlay-medium: rgba(238, 240, 250, 0.10);
+  --overlay-dark: rgba(0, 0, 0, 0.3);
+  --overlay-darker: rgba(0, 0, 0, 0.6);
+
+  --color-preset-bg: #1c1e28;
+  --color-preset-border: #30323e;
+  --color-preset-favorite: var(--color-accent);
+  --color-preset-text: #eef0fa;
+
+  --amp-glow: radial-gradient(ellipse, rgba(225, 200, 155, 0.25) 0%, transparent 70%);
+
+  --eq-curve-grid: rgba(238, 240, 250, 0.06);
+  --eq-curve-response: rgba(225, 200, 155, 0.85);
+  --eq-curve-handle-stroke: rgba(238, 240, 250, 0.8);
+  --eq-curve-tooltip-bg: rgba(13, 15, 23, 0.9);
+  --eq-curve-tooltip-text: #eef0fa;
+
+  --performance-plot-line: rgba(225, 200, 155, 0.85);
+  --performance-plot-fill: rgba(225, 200, 155, 0.14);
+  --performance-plot-grid: rgba(200, 203, 215, 0.12);
+
+  --sb-track: var(--bg-dark-secondary);
+  --sb-track-border: var(--border-dark-light);
+  --sb-thumb: var(--border-dark-medium);
+  --sb-thumb-border: var(--border-dark-light);
+  --sb-thumb-hover: var(--border-dark-strong);
+  --sb-thumb-hover-border: var(--border-dark-light);
+}
+
+.theme-dark1 input[type="text"],
+.theme-dark1 input[type="password"],
+.theme-dark1 input[type="number"],
+.theme-dark1 input[type="search"],
+.theme-dark1 input[type="email"],
+.theme-dark1 input[type="url"],
+.theme-dark1 textarea,
+.theme-dark1 select {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border-dark);
+  color-scheme: dark;
+}
+
+.theme-dark1 input::placeholder,
+.theme-dark1 textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.theme-dark1 select option,
+.theme-dark1 select optgroup {
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+
+/* ===== From controls.css ===== */
+.theme-dark1 .input-channel-selector select {
+  color-scheme: dark;
+}
+
+
+/* ===== From settings.css ===== */
+.theme-dark1 .settings-row select,
+.theme-dark1 .settings-section select {
+  color-scheme: dark;
+}
+
+.theme-dark1 .equipment-library-filters select {
+  color-scheme: dark;
+}
+
+
+/* ===== From modals.css ===== */
+.theme-dark1 .save-preset-modal .form-group select {
+  color-scheme: dark;
+}
+
+.theme-dark1 .save-preset-modal .form-group select option,
+.theme-dark1 .save-preset-modal .form-group select optgroup {
+  background: var(--bg-dark-secondary);
+  color: var(--text-primary);
+}
+
+
+/* ===== From navigation.css ===== */
+
+
+
+/* ===== From signal-path.css ===== */
+.theme-dark1 .default-effect-shell {
+  border-color: rgba(104, 112, 128, 0.22);
+  background:
+    linear-gradient(180deg, rgba(20, 22, 32, 0.96) 0%, rgba(13, 15, 23, 0.98) 44%, rgba(10, 12, 18, 1) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(238, 240, 250, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.58),
+    0 28px 55px rgba(0, 0, 0, 0.5);
+}

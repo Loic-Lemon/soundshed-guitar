@@ -30,6 +30,8 @@ export interface KnobConfig {
   onValueChange?: (value: number) => void;
   onValueCommit?: (value: number) => void;
   sendParameter?: boolean;
+  lockValues?: number[];
+  lockRange?: number;
 }
 
 interface RangeInputInteractionOptions {
@@ -53,6 +55,12 @@ function countStepDecimals(stepValue: number): number {
 
   const fractional = normalized.split(".")[1];
   return fractional ? fractional.length : 0;
+}
+
+export function integerLocks(min: number, max: number): number[] {
+  const locks: number[] = [];
+  for (let i = Math.ceil(min); i <= Math.floor(max); i++) locks.push(i);
+  return locks;
 }
 
 function deriveRangeStep(minValue: number, maxValue: number, stepValue?: number): number {
@@ -148,6 +156,10 @@ export class GenericKnob {
   private startValue = 0;
   private inlineEditor: HTMLInputElement | null = null;
   private activePointerId: number | null = null;
+  private lockValues: number[];
+  private lockRange: number;
+  private lockedPoint: number | null = null;
+  private lastRawValue: number;
 
   constructor(config: KnobConfig) {
     this.knobElement = config.knobElement;
@@ -174,6 +186,17 @@ export class GenericKnob {
       this.editableValueElement.dataset.originalLabel = this.editableValueElement.textContent?.trim() ?? "";
     }
 
+    this.lockValues = config.lockValues ?? [];
+    this.lockRange = config.lockRange ?? this.stepValue * 5;
+    this.lastRawValue = this.currentValue;
+    if (this.lockValues.length > 0) {
+      for (const lv of this.lockValues) {
+        if (Math.abs(this.currentValue - lv) <= this.lockRange) {
+          this.lockedPoint = lv;
+          break;
+        }
+      }
+    }
     this.initialize();
   }
 
@@ -182,6 +205,16 @@ export class GenericKnob {
     const dataValue = parseFloat(this.knobElement.dataset.value ?? "");
     if (!isNaN(dataValue)) {
       this.currentValue = dataValue;
+      this.lastRawValue = dataValue;
+      if (this.lockValues.length > 0) {
+        this.lockedPoint = null;
+        for (const lv of this.lockValues) {
+          if (Math.abs(dataValue - lv) <= this.lockRange) {
+            this.lockedPoint = lv;
+            break;
+          }
+        }
+      }
     }
 
     this.knobElement.tabIndex = this.knobElement.tabIndex >= 0 ? this.knobElement.tabIndex : 0;
@@ -242,6 +275,34 @@ export class GenericKnob {
     }
   }
 
+  private applyLock(rawValue: number): number {
+    if (this.lockValues.length === 0) return rawValue;
+
+    if (this.lockedPoint !== null) {
+      if (Math.abs(rawValue - this.lockedPoint) <= this.lockRange) {
+        return this.lockedPoint;
+      }
+      this.lockedPoint = null;
+      this.lastRawValue = rawValue;
+      return rawValue;
+    }
+
+    for (const lockValue of this.lockValues) {
+      const prev = this.lastRawValue;
+      const crossed =
+        (prev <= lockValue && rawValue >= lockValue) ||
+        (prev >= lockValue && rawValue <= lockValue);
+      if (crossed) {
+        this.lockedPoint = lockValue;
+        this.lastRawValue = rawValue;
+        return lockValue;
+      }
+    }
+
+    this.lastRawValue = rawValue;
+    return rawValue;
+  }
+
   private applyValue(value: number, commit = false): void {
     this.setValue(value);
     this.emitLiveValue(this.currentValue);
@@ -255,6 +316,16 @@ export class GenericKnob {
     e.stopPropagation();
     this.closeInlineEditor(true);
     this.setValue(this.defaultValue);
+    this.lockedPoint = null;
+    this.lastRawValue = this.defaultValue;
+    if (this.lockValues.length > 0) {
+      for (const lv of this.lockValues) {
+        if (Math.abs(this.defaultValue - lv) <= this.lockRange) {
+          this.lockedPoint = lv;
+          break;
+        }
+      }
+    }
     if (this.sendParameter) {
       setParameter(this.paramId, this.defaultValue);
       appendLog(`${this.paramId} → ${this.defaultValue.toFixed(2)} (reset to default)`);
@@ -278,6 +349,7 @@ export class GenericKnob {
     this.isDragging = true;
     this.startY = e.clientY;
     this.startValue = this.currentValue;
+    this.lastRawValue = this.currentValue;
     this.activePointerId = e.pointerId ?? null;
 
     if (typeof this.knobElement.setPointerCapture === "function") {
@@ -297,6 +369,7 @@ export class GenericKnob {
     const deltaY = this.startY - e.clientY;
     let newValue = this.startValue + deltaY * this.sensitivity;
     newValue = clampValue(newValue, this.minValue, this.maxValue);
+    newValue = this.applyLock(newValue);
 
     this.currentValue = newValue;
     this.knobElement.dataset.value = newValue.toString();
@@ -326,6 +399,7 @@ export class GenericKnob {
     this.isDragging = true;
     this.startY = e.clientY;
     this.startValue = this.currentValue;
+    this.lastRawValue = this.currentValue;
     e.preventDefault();
   }
 
@@ -335,6 +409,7 @@ export class GenericKnob {
     const deltaY = this.startY - e.clientY;
     let newValue = this.startValue + deltaY * this.sensitivity;
     newValue = clampValue(newValue, this.minValue, this.maxValue);
+    newValue = this.applyLock(newValue);
 
     this.currentValue = newValue;
     this.knobElement.dataset.value = newValue.toString();
@@ -358,7 +433,7 @@ export class GenericKnob {
     e.preventDefault();
     this.knobElement.focus();
     const delta = e.deltaY < 0 ? this.stepValue : -this.stepValue;
-    this.applyValue(this.currentValue + delta, true);
+    this.applyValue(this.applyLock(this.currentValue + delta), true);
   }
 
   private onValueDoubleClick(e: MouseEvent): void {
@@ -638,6 +713,7 @@ function initializeInputOutputKnobs(): void {
       displayFormat: (value) => `${value >= 0 ? "+" : ""}${value.toFixed(1)} dB`,
       valueDisplayId: "input-value",
       sensitivity: 0.1,
+      lockValues: integerLocks(-12, 12),
       sendParameter: false,
       onValueChange: (value) => {
         sendGlobalChainParam("input.gain", value);
@@ -666,6 +742,7 @@ function initializeInputOutputKnobs(): void {
       displayFormat: (value) => `${value >= 0 ? "+" : ""}${value.toFixed(1)} dB`,
       valueDisplayId: "output-value",
       sensitivity: 0.1,
+      lockValues: integerLocks(-12, 12),
       sendParameter: false,
       onValueChange: (value) => {
         sendGlobalChainParam("output.gain", value);
@@ -696,36 +773,32 @@ function initializeInputOutputKnobs(): void {
       maxValue: 12,
       defaultValue: 0,
       displayFormat: (value) => {
-        const rounded = Math.round(value);
-        return rounded >= 0 ? `+${rounded} st` : `${rounded} st`;
+        const int = Math.round(value);
+        return int >= 0 ? `+${int} st` : `${int} st`;
       },
       valueDisplayId: "transpose-value",
       sensitivity: 0.1,
+      lockValues: integerLocks(-12, 12),
       sendParameter: false,
       onValueChange: (value) => {
-        // Snap to integer values for semitones and send to plugin
-        const rounded = Math.round(value);
-        if (Math.abs(value - rounded) > 0.01) {
-          transposeKnobInstance.setValue(rounded);
-        }
-        const enabled = rounded !== 0;
-        // Always send the rounded integer value to the plugin
-        sendGlobalChainParam("transpose.semitones", rounded);
+        const int = Math.round(value);
+        const enabled = int !== 0;
+        sendGlobalChainParam("transpose.semitones", int);
         sendGlobalChainParam("transpose.enabled", enabled);
         const transposeNode = getPreChainTransposeNode();
         if (transposeNode) {
-          transposeNode.params.semitones = rounded;
+          transposeNode.params.semitones = int;
           transposeNode.bypassed = !enabled;
         }
       },
       onValueCommit: (value) => {
-        const rounded = Math.round(value);
-        const enabled = rounded !== 0;
-        sendGlobalChainParam("transpose.semitones", rounded);
+        const int = Math.round(value);
+        const enabled = int !== 0;
+        sendGlobalChainParam("transpose.semitones", int);
         sendGlobalChainParam("transpose.enabled", enabled);
         const transposeNode = getPreChainTransposeNode();
         if (transposeNode) {
-          transposeNode.params.semitones = rounded;
+          transposeNode.params.semitones = int;
           transposeNode.bypassed = !enabled;
         }
       },
@@ -762,6 +835,7 @@ function initializeGateControls(): void {
       displayFormat: (value) => `${value.toFixed(0)} dB`,
       valueDisplayId: "gate-threshold-value",
       sensitivity: 0.5,
+      lockValues: integerLocks(-80, -20),
       sendParameter: false,
       onValueCommit: (value) => {
         sendGlobalChainParam("gate.threshold", value);

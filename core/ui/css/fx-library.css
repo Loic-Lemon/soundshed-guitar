@@ -9,13 +9,13 @@
   flex-direction: column;
   background: var(--bg-panel);
   border: 1px solid var(--border-light);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   max-height: min(48vh, 360px);
   max-width: 860px;
   width: min(94vw, 860px);
   overflow: hidden;
   transform-origin: top center;
-  clip-path: inset(0 0 0 0 round 12px);
+  clip-path: inset(0 0 0 0 round var(--radius-xl));
   opacity: 1;
   transition: border-color 0.18s ease, transform 0.18s ease, opacity 0.18s ease, clip-path 0.18s ease;
   z-index: 200;
@@ -27,7 +27,7 @@
   border-bottom-color: transparent;
   pointer-events: none;
   transform: translateX(-50%) translateY(-10px) scaleY(0.92);
-  clip-path: inset(0 0 100% 0 round 12px);
+  clip-path: inset(0 0 100% 0 round var(--radius-xl));
   opacity: 0;
 }
 
@@ -52,7 +52,7 @@
   border: 1px solid var(--border-medium);
   background: var(--bg-card);
   color: var(--text-primary);
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
@@ -123,7 +123,7 @@
   padding: 8px 12px;
   background: var(--bg-input);
   border: 1px solid var(--border-medium);
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   color: var(--text-primary);
   font-size: 12px;
   outline: none;
@@ -163,7 +163,7 @@
   cursor: pointer;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
   margin: 2px 8px;
 }
@@ -205,7 +205,7 @@
   color: var(--text-secondary);
   background: var(--overlay-medium);
   padding: 2px 5px;
-  border-radius: 8px;
+  border-radius: var(--radius-xl);
   font-weight: 500;
 }
 
@@ -224,7 +224,7 @@
     linear-gradient(135deg, color-mix(in srgb, var(--category-color, var(--color-accent)) 10%, transparent) 0%, transparent 34%),
     var(--bg-card);
   border: 1px solid var(--border-light);
-  border-radius: 6px;
+  border-radius: var(--radius-lg);
   cursor: grab;
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--category-color, var(--color-accent)) 14%, transparent);
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
@@ -267,7 +267,7 @@
   width: 36px;
   height: 26px;
   object-fit: cover;
-  border-radius: 3px;
+  border-radius: var(--radius-md);
   display: block;
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -312,7 +312,7 @@
 
 .tone3000-status {
   padding: 2px 6px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;

@@ -32,7 +32,9 @@ export function initializeThemeSwitcher(): void {
   const themes: Array<{ value: ThemeName; label: string }> = [
     { value: 'light', label: 'Light' },
     { value: 'dark', label: 'Dark' },
-    { value: 'classic', label: 'Vintage' }
+    { value: 'classic', label: 'Vintage' },
+    { value: 'light1', label: 'Light 1' },
+    { value: 'dark1', label: 'Dark 1' }
   ];
   
   themes.forEach(theme => {

@@ -32,7 +32,7 @@ import {
   type SignalPathEdgeRef,
   type SignalPathNodeOptions,
 } from "./fxSelector.js";
-import { GenericKnob, enhanceRangeInput } from "./controls.js";
+import { GenericKnob, enhanceRangeInput, integerLocks } from "./controls.js";
 import { getUnsupportedPluginSelection, inferPluginFormat, type PluginResourceSupportInfo } from "./pluginSupport.js";
 import {
   EqCurveInteraction,
@@ -376,7 +376,7 @@ function applyOptimisticNodeReplacement(
   showNodeParamsPanel(targetNode, preset);
 
   const visualizerButton = document.querySelector(
-    '.icon-bar .icon-btn[data-panel="visualizer"]',
+    '.icon-bar .nav-tab[data-panel="visualizer"]',
   ) as HTMLElement | null;
   if (visualizerButton && !visualizerButton.classList.contains("active")) {
     visualizerButton.click();
@@ -2921,7 +2921,7 @@ function bindNodeClickHandlers(preset: Preset): void {
     }
 
     const visualizerButton = document.querySelector(
-      '.icon-bar .icon-btn[data-panel="visualizer"]',
+      '.icon-bar .nav-tab[data-panel="visualizer"]',
     ) as HTMLElement | null;
     if (visualizerButton && !visualizerButton.classList.contains("active")) {
       visualizerButton.click();
@@ -4553,6 +4553,7 @@ function bindNodeParamControls(node: GraphNode, preset: Preset): void {
       labelElement: knob.parentElement?.querySelector(".node-param-label, .custom-control-label") as HTMLElement | null,
       sensitivity,
       stepValue: step,
+      lockValues: !isBlendParam && !isEnum && step === 1 ? integerLocks(min, max) : undefined,
       sendParameter: false,
       onValueChange: (value) => {
         if (!nodeId || !paramKey) return;

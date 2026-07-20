@@ -3,9 +3,9 @@
  * Manages switching between light, dark, and classic themes
  */
 
-export type ThemeName = 'light' | 'dark' | 'classic';
+export type ThemeName = 'light' | 'dark' | 'classic' | 'light1' | 'dark1';
 
-const THEME_LIST: ThemeName[] = ['light', 'dark', 'classic'];
+const THEME_LIST: ThemeName[] = ['light', 'dark', 'classic', 'light1', 'dark1'];
 const LEGACY_THEME_MAP: Record<string, ThemeName> = {
   default: 'dark',
   gritty: 'dark',
@@ -32,7 +32,7 @@ export class ThemeSwitcher {
    */
   setTheme(theme: ThemeName, persist: boolean = true): void {
     // Remove all theme classes
-    this.body.classList.remove('theme-light', 'theme-dark', 'theme-classic');
+    this.body.classList.remove('theme-light', 'theme-dark', 'theme-classic', 'theme-light1', 'theme-dark1');
     
     // Add new theme class
     this.body.classList.add(`theme-${theme}`);
@@ -78,7 +78,9 @@ export class ThemeSwitcher {
     const names: Record<ThemeName, string> = {
       light: 'Light',
       dark: 'Dark',
-      classic: 'Vintage'
+      classic: 'Vintage',
+      light1: 'Light 1',
+      dark1: 'Dark 1'
     };
     return names[t];
   }

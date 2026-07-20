@@ -1,0 +1,373 @@
+/* ===== Light 1 Theme =====
+ * Based on research-website light mode palette.
+ */
+
+.theme-light1 {
+  --color-accent: #194bd2;
+  --color-accent-hover: #2058e6;
+  --color-accent-dark: #143da8;
+  --color-accent-rgb: 25, 75, 210;
+
+  --bg-primary: #fffcf8;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f5f5f4;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+
+  --bg-panel: #f5f5f4;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+
+  --bg-dark-primary: #f0eee8;
+  --bg-dark-secondary: #e8e6e0;
+  --bg-dark-tertiary: #e0ded8;
+  --bg-dark-surface: #f5f4f0;
+
+  --bg-footer: #f5f5f4;
+  --bg-header-dark: #e8e6e0;
+
+  --bg-fx-primary: #f5f5f4;
+  --bg-fx-secondary: #fafafa;
+  --bg-fx-categories: #f0f0ee;
+
+  --text-primary: #0f0f0f;
+  --text-secondary: #41414b;
+  --text-tertiary: #5a5a66;
+  --text-muted: #6a6a78;
+
+  --text-dark-primary: #0f0f0f;
+  --text-dark-secondary: #41414b;
+  --text-dark-tertiary: #5a5a66;
+  --text-dark-muted: #6a6a78;
+
+  --border-light: #e5e5e5;
+  --border-medium: #d4d4d4;
+  --border-strong: #c4c4c4;
+  --border-dark: #b0b0b0;
+  --border-darker: #9a9a9a;
+
+  --border-dark-light: #d4d4d4;
+  --border-dark-medium: #c4c4c4;
+  --border-dark-strong: #b0b0b0;
+
+  --bg-browser-shell: rgba(250, 250, 249, 0.95);
+  --bg-browser-header: rgba(252, 252, 248, 0.98);
+  --bg-browser-sidebar: rgba(245, 245, 244, 0.96);
+  --bg-browser-card: rgba(255, 255, 255, 0.95);
+  --bg-browser-input: rgba(255, 255, 255, 0.98);
+  --bg-browser-hover: rgba(25, 75, 210, 0.08);
+  --bg-browser-selected: rgba(25, 75, 210, 0.12);
+  --border-browser: rgba(229, 229, 229, 0.8);
+  --border-browser-strong: rgba(212, 212, 212, 0.9);
+
+  --accent-primary: var(--color-accent);
+  --bg-control: #f5f5f4;
+  --button-bg: #ffffff;
+  --button-text: #0f0f0f;
+  --button-border: #d4d4d4;
+  --button-bg-hover: #f5f5f4;
+  --button-border-hover: #c4c4c4;
+
+  --modal-bg: #ffffff;
+  --modal-bg-raised: var(--modal-bg);
+  --modal-text: #0f0f0f;
+  --modal-text-secondary: #41414b;
+  --modal-text-muted: #9a9aa8;
+  --modal-border: #e5e5e5;
+  --modal-border-medium: #d4d4d4;
+  --modal-close-hover: rgba(0, 0, 0, 0.06);
+  --modal-input-bg: #ffffff;
+  --modal-input-text: #0f0f0f;
+  --modal-input-border: #d4d4d4;
+  --modal-input-placeholder: #9a9aa8;
+
+  --control-bg: #ffffff;
+  --control-knob-bg: #e8e6e4;
+  --control-border: #d4d4d4;
+  --control-indicator: #41414b;
+  --knob-border-highlight: rgba(255, 255, 255, 0.7);
+  --knob-border-shadow: rgba(15, 15, 15, 0.1);
+  --knob-ring-color: #194bd2;
+  --knob-ring-track: rgba(0, 0, 0, 0.12);
+
+  --toggle-bg: #c4c4c4;
+  --toggle-border: #b0b0b0;
+  --toggle-active: var(--color-accent);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.07);
+  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.10);
+
+  --shadow-inset-light: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --shadow-inset-dark: inset 0 -2px 0 rgba(0, 0, 0, 0.06);
+
+  --overlay-light: rgba(255, 255, 255, 0.3);
+  --overlay-medium: rgba(255, 255, 255, 0.5);
+  --overlay-dark: rgba(0, 0, 0, 0.1);
+  --overlay-darker: rgba(0, 0, 0, 0.4);
+
+  --color-preset-bg: #faf8f6;
+  --color-preset-border: #e0ddd8;
+  --color-preset-favorite: #c49aa0;
+  --color-preset-text: #0f0f0f;
+
+  --amp-glow: radial-gradient(ellipse, rgba(25, 75, 210, 0.2) 0%, transparent 70%);
+
+  --eq-curve-grid: rgba(15, 15, 15, 0.08);
+  --eq-curve-response: rgba(25, 75, 210, 0.85);
+  --eq-curve-handle-stroke: rgba(15, 15, 15, 0.7);
+  --eq-curve-tooltip-bg: rgba(15, 15, 15, 0.9);
+  --eq-curve-tooltip-text: #ffffff;
+
+  --performance-plot-line: rgba(25, 75, 210, 0.85);
+  --performance-plot-fill: rgba(25, 75, 210, 0.14);
+  --performance-plot-grid: rgba(65, 65, 75, 0.18);
+
+  --sb-track: var(--bg-tertiary);
+  --sb-track-border: var(--border-light);
+  --sb-thumb: var(--border-medium);
+  --sb-thumb-border: var(--border-light);
+  --sb-thumb-hover: var(--border-strong);
+  --sb-thumb-hover-border: var(--border-light);
+}
+
+.theme-light1 select {
+  color-scheme: light;
+}
+
+.theme-light1 select option,
+.theme-light1 select optgroup {
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+
+/* ===== From base.css ===== */
+.theme-light1 .footer-bar {
+  background: var(--bg-footer);
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-light);
+  box-shadow: 0 -8px 20px rgba(15, 15, 15, 0.04);
+}
+
+.theme-light1 .footer-btn {
+  color: var(--text-secondary);
+}
+
+.theme-light1 .footer-btn:hover {
+  color: var(--text-primary);
+}
+
+.theme-light1 #footer-pads-btn,
+.theme-light1 #footer-compact-pads-btn {
+  border-color: var(--border-medium);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  box-shadow:
+    0 1px 2px rgba(15, 15, 15, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.theme-light1 #footer-pads-btn:hover,
+.theme-light1 #footer-compact-pads-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-strong);
+}
+
+.theme-light1 #footer-pads-btn.is-active,
+.theme-light1 #footer-compact-pads-btn.is-active {
+  border-color: color-mix(in srgb, var(--color-accent) 56%, var(--border-medium));
+  background: color-mix(in srgb, var(--color-accent) 16%, var(--bg-elevated));
+  color: var(--color-accent-dark);
+}
+
+.theme-light1 .footer-actions-toggle {
+  background: var(--bg-elevated);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+  box-shadow:
+    0 1px 2px rgba(15, 15, 15, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.theme-light1 .footer-actions-toggle:hover,
+.theme-light1 .footer-actions-toggle[aria-expanded="true"] {
+  background: var(--bg-tertiary);
+  border-color: var(--border-strong);
+}
+
+.theme-light1 .footer-actions-panel {
+  border-color: var(--border-light);
+}
+
+.theme-light1 .footer-divider {
+  color: var(--border-dark);
+}
+
+.theme-light1 .footer-play-btn,
+.theme-light1 .footer-repeat-btn,
+.theme-light1 .footer-debug-capture-btn,
+.theme-light1 .footer-demo-actions-button,
+.theme-light1 .footer-metronome-play-btn,
+.theme-light1 .footer-demo-select {
+  background: var(--bg-elevated);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+  box-shadow:
+    0 1px 2px rgba(15, 15, 15, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.theme-light1 .footer-play-btn:hover,
+.theme-light1 .footer-repeat-btn:hover,
+.theme-light1 .footer-debug-capture-btn:hover,
+.theme-light1 .footer-demo-actions-button:hover,
+.theme-light1 .footer-metronome-play-btn:hover:not(:disabled) {
+  background: var(--bg-tertiary);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  box-shadow:
+    0 4px 10px rgba(15, 15, 15, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.theme-light1 .footer-repeat-btn.is-active,
+.theme-light1 .footer-metronome-play-btn.is-active {
+  color: var(--color-accent);
+  border-color: color-mix(in srgb, var(--color-accent) 50%, var(--border-medium));
+}
+
+.theme-light1 .footer-demo-select {
+  color-scheme: light;
+}
+
+.theme-light1 .footer-demo-select:focus {
+  border-color: var(--color-accent);
+  box-shadow: var(--focus-ring);
+}
+
+.theme-light1 .footer-theme-label,
+.theme-light1 .footer-zoom-label,
+.theme-light1 .footer-hint {
+  color: var(--text-muted);
+}
+
+.theme-light1 .bpm-display {
+  color: var(--text-secondary);
+}
+
+.theme-light1 .footer-bpm-panel {
+  background: var(--bg-elevated);
+  border-color: var(--border-light);
+  box-shadow: 0 12px 28px rgba(15, 15, 15, 0.12);
+}
+
+.theme-light1 .footer-bpm-field input {
+  background: var(--bg-input);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+
+
+/* ===== From controls.css ===== */
+.theme-light1 .input-channel-selector select {
+  color-scheme: light;
+}
+
+
+/* ===== From settings.css ===== */
+.theme-light1 .settings-row select,
+.theme-light1 .settings-section select {
+  color-scheme: light;
+}
+
+.theme-light1 .equipment-library-filters select {
+  color-scheme: light;
+}
+
+
+/* ===== From modals.css ===== */
+.theme-light1 .save-preset-modal .form-group select {
+  color-scheme: light;
+}
+
+.theme-light1 .save-preset-modal .form-group select option,
+.theme-light1 .save-preset-modal .form-group select optgroup {
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+
+/* ===== From navigation.css ===== */
+
+
+.theme-light1 .preset-selector {
+  background: var(--bg-input);
+  border-color: var(--border-medium);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.theme-light1 .preset-action-btn {
+  color: var(--text-secondary);
+}
+
+.theme-light1 .preset-action-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+
+.theme-light1 .preset-extra-actions-menu {
+  background: var(--bg-panel);
+  border-color: var(--border-light);
+}
+
+.theme-light1 .preset-extra-action-item {
+  color: var(--text-primary);
+}
+
+.theme-light1 .preset-extra-action-item:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-light);
+}
+
+.theme-light1 .preset-chooser-label {
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+}
+
+.theme-light1 .preset-favorite {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+
+.theme-light1 .preset-selector-status {
+  border: none;
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-muted);
+}
+
+
+/* ===== From signal-path.css ===== */
+.theme-light1 .default-effect-shell {
+  border-color: var(--border-light);
+  background: var(--bg-tertiary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+
+/* ===== From performance-pads.css ===== */
+.theme-light1 .performance-pad-view {
+  background:
+    radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 34%),
+    linear-gradient(180deg, #fffdfa 0%, var(--bg-primary) 100%);
+}
+
+.theme-light1 .performance-pad {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(245, 245, 244, 0.98) 100%);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 10%, var(--border-medium));
+}

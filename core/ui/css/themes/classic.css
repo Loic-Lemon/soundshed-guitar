@@ -132,7 +132,7 @@
 
   /* Modal Surface Tokens */
   --modal-bg: #2a1f15;
-  --modal-bg-raised: #3d2f25;
+  --modal-bg-raised: var(--modal-bg);
   --modal-text: #f5f1e8;
   --modal-text-secondary: #e0dcd2;
   --modal-text-muted: #b8ad9f;
@@ -392,14 +392,6 @@ body.theme-classic {
 
 
 /* ===== From navigation.css ===== */
-.theme-classic .icon-bar {
-  background: #3d2f25;
-  border-bottom: 1px solid #5a5048;
-  box-shadow:
-    inset 0 1px 0 rgba(245, 241, 232, 0.08),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-}
-
 .theme-classic .icon-btn {
   background: transparent;
   border: 1px solid rgba(107, 95, 79, 0.5);
@@ -428,6 +420,10 @@ body.theme-classic {
   box-shadow:
     inset 0 1px 0 rgba(245, 241, 232, 0.08),
     inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.theme-classic .icon-bar {
+  background: #4a403a;
 }
 
 .theme-classic .preset-group {
@@ -495,24 +491,8 @@ body.theme-classic {
 }
 
 /* Classic theme nav bar */
-.theme-classic .nav-tab {
-  color: rgba(255, 234, 196, 0.6) !important;
-}
-
-.theme-classic .nav-tab:hover {
-  color: rgba(255, 244, 220, 0.9) !important;
-}
-
-.theme-classic .nav-tab.active {
-  color: var(--color-accent) !important;
-  border-bottom-color: var(--color-accent) !important;
-}
 
 
-.theme-classic .nav-settings-btn {
-  border-color: rgba(188, 138, 91, 0.35) !important;
-  color: rgba(255, 234, 196, 0.6) !important;
-}
 
 
 /* ===== From signal-path.css ===== */

@@ -1,3 +1,13 @@
+# Fork Notes
+
+> **Fork of [soundshed/soundshed-guitar](https://github.com/soundshed/soundshed-guitar)**
+>
+> I forked this to tweak the UI/UX and add features I want as I use the app.
+>
+> Current changes are mostly visual or QOL. I'll keep adding things as I need them.
+>
+> See [fork_changelog.md](fork_changelog.md) for details.
+
 # Soundshed Guitar
 
 Soundshed Guitar is a guitar/bass effects app and plugin combining Neural Amp Modeler (NAM) with a modern UI. It targets VST3, AU, CLAP and AAX formats with an extensible signal graph architecture.
