@@ -67,7 +67,7 @@ export const FEATURE_DEFINITIONS: FeatureDefinition[] = [
     key: "features.toneSharing.enabled",
     label: "Tone Sharing",
     description: "Shows the tone-sharing panel and publishing workflows.",
-    defaultEnabled: true,
+    defaultEnabled: false, // Disabled to avoid hitting Soundshed servers
   },
   {
     id: Features.AiToneSearch,

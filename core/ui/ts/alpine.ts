@@ -38,7 +38,7 @@ export function initAlpineStores(): void {
 
     // Simple flags for demo / feature wiring
     jamEnabled: true,
-    toneSharingEnabled: true,
+    toneSharingEnabled: false, // Disabled to avoid hitting Soundshed servers
 
     // Example reactive header bits (will grow)
     activePresetName: 'Default Preset',

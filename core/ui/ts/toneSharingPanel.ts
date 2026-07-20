@@ -182,7 +182,8 @@ const FEATURED_PRESET_MAX = 10;
 const SHOW_TONE_SHARING_STATS = false;
 
 const state = {
-  apiBase: "https://api-guitar.soundshed.com/v1", //"http://127.0.0.1:8787/v1", 
+  //apiBase: "https://api-guitar.soundshed.com/v1", //"http://127.0.0.1:8787/v1",
+  apiBase: "", // Disabled — set empty to prevent hitting Soundshed servers
   sessionId: "",
   user: null as ToneSharingUser | null,
   myItems: [] as ToneSharingItem[],
@@ -4293,6 +4294,14 @@ let toneSharingPanelInitialized = false;
 
 export function initializeToneSharingPanel(): void {
   if (!element("panel-sharing")) {
+    return;
+  }
+
+  if (!state.apiBase) {
+    const disabledMsg = document.getElementById("tone-sharing-disabled-message");
+    const panelContent = document.getElementById("tone-sharing-panel-content");
+    if (disabledMsg) disabledMsg.style.display = "";
+    if (panelContent) panelContent.style.display = "none";
     return;
   }
 

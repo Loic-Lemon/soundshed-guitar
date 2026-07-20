@@ -459,8 +459,8 @@ function syncFeatureVisibility(): void {
   setElementVisibility(layoutsTabPanel, isFeatureEnabled(Features.EffectLayout));
 
   setElementVisibility(equipmentLibraryTabButton, libraryEnabled);
-  setElementVisibility(sharingPanelButton, toneSharingEnabled);
-  setElementVisibility(sharingPanel, toneSharingEnabled);
+  setElementVisibility(sharingPanelButton, true);
+  setElementVisibility(sharingPanel, true);
   setElementVisibility(jamPanelButton, jamExperienceEnabled);
   setElementVisibility(jamPanel, jamExperienceEnabled);
   setElementVisibility(jamPlayerDock, jamEnabled);

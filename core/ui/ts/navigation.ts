@@ -138,9 +138,6 @@ export function switchMainPanel(panelId: string): void {
     if (normalizedPanelId === "jam" && (!isJamEnabled() || !isJamExperienceEnabled())) {
       return "visualizer";
     }
-    if (normalizedPanelId === "sharing" && !isFeatureEnabled(Features.ToneSharing)) {
-      return "visualizer";
-    }
     return normalizedPanelId;
   })();
 
