@@ -848,6 +848,8 @@ void PluginProcessorAdapter::setWebMessageCallback (
     mWebMessageCallback = std::move (callback);
 }
 
+static void buildAudioDeviceListResponse (juce::AudioDeviceManager& mgr, nlohmann::json& response);
+
 void PluginProcessorAdapter::handleWebMessage (const juce::String& message)
 {
     const auto parsed = juce::JSON::parse (message);
@@ -879,6 +881,29 @@ void PluginProcessorAdapter::handleWebMessage (const juce::String& message)
             return;
         }
 
+        // Handle window controls (standalone app only)
+        if (type == "windowClose")
+        {
+            juce::JUCEApplication::getInstance()->systemRequestedQuit();
+            return;
+        }
+
+        if (type == "windowMinimize")
+        {
+            if (auto* editor = getActiveEditor())
+                if (auto* peer = editor->getPeer())
+                    peer->setMinimised(true);
+            return;
+        }
+
+        if (type == "windowMaximize")
+        {
+            if (auto* editor = getActiveEditor())
+                if (auto* peer = editor->getPeer())
+                    peer->setFullScreen(!peer->isFullScreen());
+            return;
+        }
+
         // Handle audio device selection (standalone only)
         if (type == "setAudioDevice")
         {
@@ -897,7 +922,7 @@ void PluginProcessorAdapter::handleWebMessage (const juce::String& message)
                 const auto bufferSize = static_cast<int> (obj->getProperty (bufferSizeId).toString().getIntValue());
 
                 // Change device type if needed
-                if (deviceTypeName.isNotEmpty() && deviceTypeName != mgr->getCurrentDeviceType())
+                if (deviceTypeName.isNotEmpty() && deviceTypeName != mgr->getCurrentAudioDeviceType())
                     mgr->setCurrentAudioDeviceType (deviceTypeName, true);
 
                 juce::AudioDeviceManager::AudioDeviceSetup setup;
@@ -981,7 +1006,7 @@ juce::AudioDeviceManager* PluginProcessorAdapter::getStandaloneDeviceManager()
 static void buildAudioDeviceListResponse (juce::AudioDeviceManager& mgr, nlohmann::json& response)
 {
     auto* currentDevice = mgr.getCurrentAudioDevice();
-    const auto currentTypeName = mgr.getCurrentDeviceType();
+    const auto currentTypeName = mgr.getCurrentAudioDeviceType();
 
     nlohmann::json inputDevices = nlohmann::json::array();
     nlohmann::json outputDevices = nlohmann::json::array();
@@ -1020,8 +1045,9 @@ static void buildAudioDeviceListResponse (juce::AudioDeviceManager& mgr, nlohman
 
     if (currentDevice != nullptr)
     {
-        response["currentInputDeviceName"] = currentDevice->getInputDeviceName().toStdString();
-        response["currentOutputDeviceName"] = currentDevice->getOutputDeviceName().toStdString();
+        auto setup = mgr.getAudioDeviceSetup();
+        response["currentInputDeviceName"] = setup.inputDeviceName.toStdString();
+        response["currentOutputDeviceName"] = setup.outputDeviceName.toStdString();
         response["currentSampleRate"] = currentDevice->getCurrentSampleRate();
         response["currentBufferSize"] = currentDevice->getCurrentBufferSizeSamples();
 

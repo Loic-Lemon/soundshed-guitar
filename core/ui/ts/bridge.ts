@@ -235,3 +235,19 @@ export function removeCompositePreset(id: string): void {
   postMessage({ type: "removeCompositePreset", id });
   appendLog(`removeCompositePreset → ${id}`);
 }
+
+export function closeWindow(): void {
+  postMessage({ type: "windowClose" });
+}
+
+export function minimizeWindow(): void {
+  postMessage({ type: "windowMinimize" });
+}
+
+export function zoomWindow(): void {
+  postMessage({ type: "windowMaximize" });
+}
+
+(window as any).windowClose = closeWindow;
+(window as any).windowMinimize = minimizeWindow;
+(window as any).windowZoom = zoomWindow;

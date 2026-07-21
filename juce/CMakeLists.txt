@@ -16,13 +16,13 @@ set(PROJECT_NAME "SoundshedGuitar")
 #   set(PROJECT_NAME "MyPlugin_v${MAJOR_VERSION}")
 # Doing so enables major versions to show up in IDEs and DAWs as separate plugins
 # allowing you to change parameters and behavior without breaking existing user projects
-set(PRODUCT_NAME "Fork: Soundshed Guitar")
+set(PRODUCT_NAME "Fork - Soundshed Guitar")
 
 # Change me! Used for the MacOS bundle name and Installers
 set(COMPANY_NAME "Soundshed")
 
 # Change me! Used for the MacOS bundle identifier (and signing)
-set(BUNDLE_ID "com.soundshed.guitar")
+set(BUNDLE_ID "com.soundshed.guitar.fork")
 
 # Change me! Set the plugin formats you want built
 # Valid choices: AAX Unity VST VST3 AU AUv3 Standalone LV2
@@ -345,7 +345,7 @@ include(SharedCodeDefaults)
 # and utility code are now provided by the SoundshedGuitarCore library.
 # Only the JUCE adapter and editor sources are compiled here.
 set(SourceFiles
-    "${CMAKE_CURRENT_SOURCE_DIR}/source/Main.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/source/Main.mm"
     "${CMAKE_CURRENT_SOURCE_DIR}/source/JuceHostedPluginEffect.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/source/JuceHostedPluginEffect.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/source/PluginEditor.h"

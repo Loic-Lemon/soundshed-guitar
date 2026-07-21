@@ -112,7 +112,7 @@ jobs:
         run: |
           set -euo pipefail
           ARTEFACTS="juce/builds/SoundshedGuitar_artefacts/Release"
-          PRODUCT="Fork: Soundshed Guitar"
+          PRODUCT="Fork - Soundshed Guitar"
 
           sign_if_exists() {
             local path="$1"

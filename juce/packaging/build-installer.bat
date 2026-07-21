@@ -18,7 +18,7 @@ set "WORKSPACE_ROOT=%SCRIPT_DIR%..\.."
 
 :: --- Project identity (must match juce\CMakeLists.txt) -------------------
 set "PROJECT_NAME=SoundshedGuitar"
-set "PRODUCT_NAME=Fork: Soundshed Guitar"
+set "PRODUCT_NAME=Fork - Soundshed Guitar"
 set "COMPANY_NAME=Soundshed"
 
 :: --- Inno Setup compiler path --------------------------------------------

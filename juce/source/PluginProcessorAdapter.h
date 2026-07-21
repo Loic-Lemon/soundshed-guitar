@@ -21,6 +21,7 @@
 namespace juce
 {
     class FileChooser;
+    class AudioDeviceManager;
 }
 
 class PluginProcessorAdapter : public juce::AudioProcessor,

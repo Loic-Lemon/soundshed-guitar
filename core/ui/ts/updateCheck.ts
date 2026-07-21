@@ -181,7 +181,7 @@ function createUpdateModal(data: UpdateCheckResult): void {
           <button class="icon-btn" id="update-modal-close">&times;</button>
         </div>
         <div class="modal-body">
-          <p>A new version of Fork: Soundshed Guitar is available: <strong>${data.latest_version}</strong></p>
+          <p>A new version of Fork - Soundshed Guitar is available: <strong>${data.latest_version}</strong></p>
           <div class="release-notes" style="margin-top: 15px; max-height: 200px; overflow-y: auto; background: var(--bg-color-dark, rgba(0,0,0,0.1)); padding: 10px; border-radius: var(--radius-md); font-size: 0.9em;">
             ${renderMarkdown(data.release_notes || "No release notes provided.")}
           </div>

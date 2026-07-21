@@ -1,0 +1,94 @@
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 36px;
+  padding: 0 12px;
+  flex-shrink: 0;
+  background: var(--bg-dark-primary);
+  border-bottom: 1px solid var(--border-dark);
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+.titlebar-traffic-lights {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+}
+
+.traffic-light {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(0,0,0,0.15);
+  cursor: pointer;
+  position: relative;
+  color: transparent;
+  transition: color 0.1s ease;
+}
+
+.traffic-light::after {
+  content: '';
+  font-size: 11px;
+  line-height: 1;
+}
+
+.traffic-light-close {
+  background: #ff5f57;
+}
+
+.traffic-light-close:hover {
+  color: rgba(0,0,0,0.55);
+}
+
+.traffic-light-close:hover::after {
+  content: '✕';
+}
+
+.traffic-light-minimize {
+  background: #febc2e;
+}
+
+.traffic-light-minimize:hover {
+  color: rgba(0,0,0,0.55);
+}
+
+.traffic-light-minimize:hover::after {
+  content: '−';
+}
+
+.traffic-light-zoom {
+  background: #28c840;
+}
+
+.traffic-light-zoom:hover {
+  color: rgba(0,0,0,0.55);
+}
+
+.traffic-light-zoom:hover::after {
+  content: '+';
+}
+
+.titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.titlebar-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-dark-muted);
+}
+
+.titlebar-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dark-secondary);
+  letter-spacing: 0.02em;
+}

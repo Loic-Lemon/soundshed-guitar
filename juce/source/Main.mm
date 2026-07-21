@@ -6,6 +6,10 @@
 #include <juce_audio_plugin_client/Standalone/juce_StandaloneFilterWindow.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 
+#if JUCE_MAC
+#import <Cocoa/Cocoa.h>
+#endif
+
 //==============================================================================
 namespace
 {
@@ -94,6 +98,22 @@ public:
 
         mPluginHolder->startPlaying();
         setVisible (true);
+
+#if JUCE_MAC
+        if (auto* peer = getPeer())
+        {
+            if (auto handle = peer->getNativeHandle())
+            {
+                NSView* view = (__bridge NSView*)handle;
+                NSWindow* win = [view window];
+                [win setOpaque:NO];
+                [win setBackgroundColor:[NSColor clearColor]];
+                [win.contentView setWantsLayer:YES];
+                win.contentView.layer.cornerRadius = 12.0;
+                win.contentView.layer.masksToBounds = YES;
+            }
+        }
+#endif
     }
 
     ~MainWindow() override

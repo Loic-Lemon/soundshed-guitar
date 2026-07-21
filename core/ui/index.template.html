@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fork: Soundshed Guitar</title>
+  <title>Fork - Soundshed Guitar</title>
   <script src="build-flags.js"></script>
   <script src="dist/alpine.min.js"></script>
   <style>
@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/controls.css" />
   <link rel="stylesheet" href="css/navigation.css" />
+  <link rel="stylesheet" href="css/titlebar.css" />
   <link rel="stylesheet" href="css/performance-pads.css" />
   <link rel="stylesheet" href="css/amp.css" />
   <link rel="stylesheet" href="css/effects.css" />
@@ -43,6 +44,21 @@
 
 <body>
   <div id="app" class="prevent-select">
+    <div class="titlebar">
+      <div class="titlebar-traffic-lights">
+        <button class="traffic-light traffic-light-close" onclick="windowClose()" aria-label="Close"></button>
+        <button class="traffic-light traffic-light-minimize" onclick="windowMinimize()" aria-label="Minimize"></button>
+        <button class="traffic-light traffic-light-zoom" onclick="windowZoom()" aria-label="Zoom"></button>
+      </div>
+      <div class="titlebar-left">
+        <svg class="titlebar-icon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="2" opacity="0.2"/>
+          <path d="M 25 85 C 45 68, 65 68, 85 85 C 105 102, 125 102, 145 85 C 165 68, 180 75, 180 85" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 25 115 C 45 132, 65 132, 85 115 C 105 98, 125 98, 145 115 C 165 132, 180 125, 180 115" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="titlebar-title">Fork - Soundshed Guitar</span>
+      </div>
+    </div>
     <!--#include:ui-components/splash-screen.html-->
 
     <!--#include:ui-components/start-page.html-->
