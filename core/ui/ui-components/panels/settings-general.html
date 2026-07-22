@@ -53,6 +53,19 @@
               <div class="settings-hint">Exports all presets and blends, plus IR/NAM files from the library based on the selected scope.</div>
             </div>
 
+            <h2>Appearance</h2>
+            <div class="settings-section">
+              <h3>Window Mode</h3>
+              <div class="settings-row" id="window-mode-row">
+                <label for="window-mode-select">Window Mode</label>
+                <select id="window-mode-select">
+                  <option value="dock" selected>Dock (standard app window)</option>
+                  <option value="menuBar">Menu bar (status item)</option>
+                </select>
+              </div>
+              <div class="settings-hint" id="window-mode-hint">Controls how the app runs on macOS. Requires a restart to apply. "Menu bar" shows a status item, hides the Dock icon, and auto-hides the window when it loses focus.</div>
+            </div>
+
             <h2>Software Updates</h2>
             <div class="settings-section">
               <h3>Current Version</h3>
@@ -60,15 +73,6 @@
                 <label>Fork - Soundshed Guitar</label>
                 <span id="current-version-display" class="version-display">—</span>
               </div>
-              <h3>App Updates</h3>
-              <div class="settings-row">
-                <label for="update-check-toggle">Check for updates on startup</label>
-                <label class="toggle-switch">
-                  <input type="checkbox" id="update-check-toggle" checked />
-                  <span class="toggle-slider"></span>
-                </label>
-              </div>
-              <div class="settings-hint">Automatically checks if a new version of Fork - Soundshed Guitar is available.</div>
             </div>
  <div class="settings-section">
               <h3>Advanced DSP Level Targets</h3>

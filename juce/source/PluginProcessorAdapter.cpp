@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <cctype>
 #include <cmath>
+#include <functional>
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
@@ -34,6 +35,11 @@ namespace juce
 {
     void JUCE_CALLTYPE juce_showStandaloneAudioSettingsDialog();
 }
+
+// Static callback for standalone window-close handling.
+// Set by MainWindow during construction so that UI "windowClose" messages
+// hide the window instead of quitting the entire app in standalone mode.
+static std::function<void()> sOnStandaloneHideWindowRequested;
 
 namespace
 {
@@ -848,6 +854,11 @@ void PluginProcessorAdapter::setWebMessageCallback (
     mWebMessageCallback = std::move (callback);
 }
 
+void PluginProcessorAdapter::setOnStandaloneHideWindowRequested (std::function<void()> callback)
+{
+    sOnStandaloneHideWindowRequested = std::move (callback);
+}
+
 static void buildAudioDeviceListResponse (juce::AudioDeviceManager& mgr, nlohmann::json& response);
 
 void PluginProcessorAdapter::handleWebMessage (const juce::String& message)
@@ -884,7 +895,10 @@ void PluginProcessorAdapter::handleWebMessage (const juce::String& message)
         // Handle window controls (standalone app only)
         if (type == "windowClose")
         {
-            juce::JUCEApplication::getInstance()->systemRequestedQuit();
+            if (wrapperType == wrapperType_Standalone && sOnStandaloneHideWindowRequested)
+                sOnStandaloneHideWindowRequested();
+            else
+                juce::JUCEApplication::getInstance()->systemRequestedQuit();
             return;
         }
 

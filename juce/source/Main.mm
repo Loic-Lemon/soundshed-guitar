@@ -8,7 +8,260 @@
 
 #if JUCE_MAC
 #import <Cocoa/Cocoa.h>
-#endif
+
+// Forward declaration
+class MainWindow;
+
+//==============================================================================
+@interface SoundshedStatusBarController : NSObject <NSMenuDelegate>
+{
+    NSMenu *_contextMenu;
+    id _rightClickMonitor;
+}
+
+@property (strong, nonatomic) NSStatusItem *statusItem;
+@property (assign, nonatomic) NSWindow *mainWindow;
+@property (assign, nonatomic) BOOL isToggling;
+
+- (instancetype)init;
+- (NSImage *)createStatusBarIcon;
+- (void)attachToWindow:(NSWindow *)window;
+- (void)detach;
+- (void)showMainWindow;
+- (void)hideMainWindow;
+- (void)updateMenuItemTitle;
+- (void)syncActivationPolicy;
+- (void)handleQuit:(id)sender;
+- (void)onWindowResignedKey:(NSNotification *)notification;
+
+@end
+
+//==============================================================================
+@implementation SoundshedStatusBarController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _isToggling = NO;
+        _rightClickMonitor = nil;
+
+        // Build the right-click context menu. We set _statusItem.menu = _contextMenu
+        // only transiently, inside a right-click event monitor, so the system shows
+        // it natively with proper styling. The menu is cleared again in menuDidClose:.
+
+        _contextMenu = [[NSMenu alloc] init];
+        [_contextMenu setDelegate:self];
+
+        NSMenuItem *showHideItem = [[NSMenuItem alloc] initWithTitle:@"Hide Fork - Soundshed Guitar"
+                                                              action:@selector(toggleWindowVisibility:)
+                                                       keyEquivalent:@""];
+        [showHideItem setTarget:self];
+        [_contextMenu addItem:showHideItem];
+        [showHideItem release];
+
+        [_contextMenu addItem:[NSMenuItem separatorItem]];
+
+        NSMenuItem *quitItem = [[NSMenuItem alloc] initWithTitle:@"Quit"
+                                                            action:@selector(handleQuit:)
+                                                       keyEquivalent:@"q"];
+        [quitItem setTarget:self];
+        [_contextMenu addItem:quitItem];
+        [quitItem release];
+
+        // Create the status item. Left-click fires toggleWindowVisibility: directly.
+        // Right-click is detected via a local event monitor that assigns _statusItem.menu
+        // just-in-time, then the system displays it natively.
+        _statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
+        _statusItem.button.image = [self createStatusBarIcon];
+        [_statusItem.button sendActionOn:NSEventMaskLeftMouseDown];
+        _statusItem.button.target = self;
+        _statusItem.button.action = @selector(toggleWindowVisibility:);
+        _statusItem.button.toolTip = @"Fork - Soundshed Guitar";
+        [_statusItem setVisible:YES];
+
+        // Local event monitor: on any right-mouse-down in our app, if the event
+        // targets the status item button, set _statusItem.menu just-in-time so
+        // the system renders it natively on right-click.
+        // In MRC the block does not retain self, so capturing self directly is
+        // safe — the monitor is always removed in detach (called from dealloc).
+        _rightClickMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskRightMouseDown
+            handler:^NSEvent *(NSEvent *event) {
+                // If the right-click is not inside our main content window, it's
+                // on the status item — set the menu just-in-time so the system
+                // displays it natively. event.window is often nil for status bar
+                // events, so we compare != _mainWindow instead of == button.window.
+                if (event.window != self->_mainWindow)
+                    self->_statusItem.menu = self->_contextMenu;
+                return event;
+            }];
+    }
+    return self;
+}
+
+// Draw a simple filled circle as the status bar icon.
+// Returns a template image that renders correctly in both light and dark menu bars.
+- (NSImage *)createStatusBarIcon
+{
+    const CGFloat size = 22.0;
+    NSImage *icon = [[[NSImage alloc] initWithSize:NSMakeSize(size, size)] autorelease];
+    [icon lockFocus];
+
+    // Filled circle with 2pt padding
+    [[NSColor blackColor] setFill];
+    [[NSBezierPath bezierPathWithOvalInRect:NSMakeRect(3, 3, 16, 16)] fill];
+
+    [icon unlockFocus];
+    [icon setTemplate:YES];
+    return icon;
+}
+
+- (void)attachToWindow:(NSWindow *)window
+{
+    _mainWindow = window;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onWindowResignedKey:)
+                                                 name:NSWindowDidResignKeyNotification
+                                               object:_mainWindow];
+    [self showMainWindow];
+}
+
+- (void)detach
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    if (_rightClickMonitor)
+    {
+        [NSEvent removeMonitor:_rightClickMonitor];
+        _rightClickMonitor = nil;
+    }
+
+    if (_statusItem)
+    {
+        _statusItem.menu = nil;
+        [[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
+        [_statusItem release];
+        _statusItem = nil;
+    }
+    _mainWindow = nil;
+}
+
+- (void)dealloc
+{
+    [self detach];
+    [_contextMenu release];
+    [super dealloc];
+}
+
+- (IBAction)toggleWindowVisibility:(id)sender
+{
+    (void)sender;
+    if (!_mainWindow)
+        return;
+
+    _isToggling = YES;
+    if ([_mainWindow isVisible])
+        [self hideMainWindow];
+    else
+        [self showMainWindow];
+    _isToggling = NO;
+}
+
+//==============================================================================
+#pragma mark - NSMenuDelegate
+
+- (void)menuWillOpen:(NSMenu *)menu
+{
+    (void)menu;
+    // Always clear the menu from the status item before the menu opens.
+    // This prevents a stale _statusItem.menu from blocking left-click if
+    // menuDidClose wasn't called for some reason (e.g. the menu failed to
+    // display after the monitor set it).
+    if (_statusItem)
+        _statusItem.menu = nil;
+    [self updateMenuItemTitle];
+}
+
+- (void)menuDidClose:(NSMenu *)menu
+{
+    if (_statusItem && _statusItem.menu == menu)
+        _statusItem.menu = nil;
+}
+
+//==============================================================================
+#pragma mark - Window management
+
+- (void)showMainWindow
+{
+    if (!_mainWindow)
+        return;
+
+    [self syncActivationPolicy];
+    [_mainWindow setLevel:NSFloatingWindowLevel];
+    [NSApp activateIgnoringOtherApps:YES];
+    [_mainWindow makeKeyAndOrderFront:nil];
+    [self updateMenuItemTitle];
+}
+
+- (void)hideMainWindow
+{
+    if (!_mainWindow)
+        return;
+
+    [_mainWindow orderOut:nil];
+    [self syncActivationPolicy];
+    [self updateMenuItemTitle];
+}
+
+- (void)updateMenuItemTitle
+{
+    NSMenuItem *item = [[_contextMenu itemArray] firstObject];
+    if (item)
+    {
+        if (_mainWindow && [_mainWindow isVisible])
+            [item setTitle:@"Hide Fork - Soundshed Guitar"];
+        else
+            [item setTitle:@"Show Fork - Soundshed Guitar"];
+    }
+}
+
+- (void)syncActivationPolicy
+{
+    [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+}
+
+- (void)handleQuit:(id)sender
+{
+    // Save state before quitting
+    if (_mainWindow && [_mainWindow isVisible])
+        [_mainWindow performClose:nil];
+
+    // Trigger the standard JUCE quit flow
+    juce::JUCEApplication::getInstance()->systemRequestedQuit();
+}
+
+- (void)onWindowResignedKey:(NSNotification *)notification
+{
+    if (_isToggling || !_mainWindow)
+        return;
+
+    // Delay the check to allow in-app windows (e.g. file dialogs) to become key.
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(),
+                   ^{
+        if (self->_isToggling || !self->_mainWindow)
+            return;
+
+        // If no app window is key, the user clicked outside the app.
+        if ([NSApp keyWindow] == nil && [self->_mainWindow isVisible])
+            [self hideMainWindow];
+    });
+}
+
+@end
+
+#endif // JUCE_MAC
 
 //==============================================================================
 namespace
@@ -77,6 +330,15 @@ public:
         // Pass the audio device manager to the plugin processor for device enumeration
         PluginProcessorAdapter::setStandaloneDeviceManager (&mPluginHolder->deviceManager);
 
+        // Read window mode setting — determines Dock vs Menu bar behavior.
+        if (auto* adapter = dynamic_cast<PluginProcessorAdapter*> (
+                mPluginHolder != nullptr ? mPluginHolder->processor.get() : nullptr))
+        {
+            const auto& s = adapter->getController().GetAppSettings();
+            const auto it = s.find ("appearance.windowMode");
+            mMenuBarMode = it != s.end() && it->is_string() && it->get<std::string>() == "menuBar";
+        }
+
         if (auto* processor = mPluginHolder != nullptr ? mPluginHolder->processor.get() : nullptr)
         {
             auto* editor = processor->hasEditor()
@@ -99,6 +361,9 @@ public:
         mPluginHolder->startPlaying();
         setVisible (true);
 
+        if (mMenuBarMode)
+            setAlwaysOnTop (true);
+
 #if JUCE_MAC
         if (auto* peer = getPeer())
         {
@@ -111,6 +376,22 @@ public:
                 [win.contentView setWantsLayer:YES];
                 win.contentView.layer.cornerRadius = 12.0;
                 win.contentView.layer.masksToBounds = YES;
+
+                if (mMenuBarMode)
+                {
+                    [win setLevel:NSFloatingWindowLevel];
+
+                    // In menu bar mode, the UI windowClose hides instead of quitting
+                    const auto a = dynamic_cast<PluginProcessorAdapter*> (mPluginHolder->processor.get());
+                    if (a != nullptr)
+                    {
+                        PluginProcessorAdapter::setOnStandaloneHideWindowRequested ([this]() {
+                            juce::MessageManager::callAsync ([this]() {
+                                setVisible (false);
+                            });
+                        });
+                    }
+                }
             }
         }
 #endif
@@ -145,13 +426,30 @@ public:
         if (mPluginHolder != nullptr)
             mPluginHolder->savePluginState();
 
-        juce::JUCEApplication::getInstance()->systemRequestedQuit();
+        if (mMenuBarMode)
+            setVisible (false);
+        else
+            juce::JUCEApplication::getInstance()->systemRequestedQuit();
     }
 
     juce::StandalonePluginHolder* getPluginHolder() const noexcept
     {
         return mPluginHolder.get();
     }
+
+#if JUCE_MAC
+    NSWindow* getNSWindow() const
+    {
+        if (auto* peer = getPeer())
+            if (auto handle = peer->getNativeHandle())
+                return [(__bridge NSView*)handle window];
+        return nil;
+    }
+#endif
+
+    bool isWindowVisible() const { return isVisible(); }
+
+    bool usesMenuBarMode() const noexcept { return mMenuBarMode; }
 
 private:
     struct WindowState
@@ -225,6 +523,7 @@ private:
     }
 
     std::unique_ptr<juce::StandalonePluginHolder> mPluginHolder;
+    bool mMenuBarMode = false;
 
     juce::Rectangle<int> mLastNonMaximizedBounds { 0, 0, 1200, 900 };
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
@@ -261,10 +560,33 @@ public:
         }
 
         mMainWindow = std::make_unique<MainWindow> (getApplicationName(), createPluginHolder());
+
+#if JUCE_MAC
+        // Create and attach the menu bar status item (only in menu bar mode)
+        if (auto* mainWin = dynamic_cast<MainWindow*> (mMainWindow.get()))
+        {
+            if (mainWin->usesMenuBarMode())
+            {
+                if (NSWindow* nativeWin = mainWin->getNSWindow())
+                {
+                    mStatusBarController = [[SoundshedStatusBarController alloc] init];
+                    [mStatusBarController attachToWindow:nativeWin];
+                }
+            }
+        }
+#endif
     }
 
     void shutdown() override
     {
+#if JUCE_MAC
+        if (mStatusBarController != nil)
+        {
+            [mStatusBarController detach];
+            [mStatusBarController release];
+            mStatusBarController = nil;
+        }
+#endif
         mMainWindow = nullptr;
         mAppProperties.saveIfNeeded();
     }
@@ -290,6 +612,12 @@ public:
 
     void anotherInstanceStarted (const juce::String& commandLine) override
     {
+        // In menu bar mode: show the window if it was hidden (e.g. the user had
+        // closed it but the app was still running in the menu bar). A new instance
+        // implies user intent to interact with the app (e.g. a soundshed:// deep link).
+        if (mMainWindow != nullptr && mMainWindow->usesMenuBarMode() && !mMainWindow->isWindowVisible())
+            mMainWindow->setVisible (true);
+
         // Extract deep link from incoming command line and route to existing instance
         const auto deepLink = extractToneSharingDeepLinkQuery (commandLine);
         if (deepLink.isNotEmpty() && mMainWindow != nullptr)
@@ -330,6 +658,10 @@ private:
 
     juce::ApplicationProperties mAppProperties;
     std::unique_ptr<MainWindow> mMainWindow;
+
+#if JUCE_MAC
+    SoundshedStatusBarController* mStatusBarController = nil;
+#endif
 };
 
 namespace juce

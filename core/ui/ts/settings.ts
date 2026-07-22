@@ -47,6 +47,7 @@ const DSP_MULTI_THREADED_SETTING = "audio.processing.multiThreaded";
 const NAM_SLIMMABLE_SIZE_SETTING = "audio.nam.slimmableSize";
 const NAM_INTERFACE_CALIBRATION_LEVEL_SETTING = "audio.nam.interfaceCalibrationLevelDbu";
 const NAM_AUTO_INPUT_CALIBRATION_SETTING = "audio.nam.autoInputCalibration";
+const WINDOW_MODE_SETTING = "appearance.windowMode";
 const DSP_NOMINAL_LEVEL_DEFAULT = -18.0;
 const DSP_NOMINAL_LEVEL_MIN = -30.0;
 const DSP_NOMINAL_LEVEL_MAX = -6.0;
@@ -127,7 +128,9 @@ const namInterfaceCalibrationLevelInput = document.getElementById("nam-interface
 const namAutoInputCalibrationToggle = document.getElementById("nam-auto-input-calibration-toggle") as HTMLInputElement | null;
 const factoryArchiveLoadingRow = document.getElementById("factory-archive-loading-row") as HTMLElement | null;
 const factoryArchiveSettingsSection = document.getElementById("factory-archive-settings-section") as HTMLElement | null;
-const updateCheckToggle = document.getElementById("update-check-toggle") as HTMLInputElement | null;
+const windowModeSelect = document.getElementById("window-mode-select") as HTMLSelectElement | null;
+const windowModeRow = document.getElementById("window-mode-row") as HTMLElement | null;
+const windowModeHint = document.getElementById("window-mode-hint") as HTMLElement | null;
 const tone3000UseSoundshedApiToggle = document.getElementById("tone3000-use-soundshed-api-toggle") as HTMLInputElement | null;
 const tone3000ApiKeyRow = document.getElementById("tone3000-api-key-row") as HTMLElement | null;
 const tone3000ProxyInfoHint = document.getElementById("tone3000-proxy-info-hint") as HTMLElement | null;
@@ -189,7 +192,7 @@ export function initSettingsPanel(): void {
   initFactoryArchiveLoadingToggle();
   initTone3000UseSoundshedApiToggle();
   initTone3000ProxyHealthCheck();
-  initUpdateCheckToggle();
+  initWindowModeSelect();
   initEquipmentTabs();
   initLibraryFilters();
   initLibraryCleanup();
@@ -815,8 +818,6 @@ function applyAdvancedSubTab(tabId: string, subTabButtons: HTMLElement[], subTab
   updateSettingsViewState({ advancedTab: resolvedTabId });
 }
 
-const UPDATE_CHECK_ENABLED_SETTING = "app.updateCheckEnabled";
-
 function initTone3000UseSoundshedApiToggle(): void {
   if (!tone3000UseSoundshedApiToggle || tone3000UseSoundshedApiToggle.dataset.bound === "true") return;
   tone3000UseSoundshedApiToggle.dataset.bound = "true";
@@ -902,13 +903,14 @@ function initTone3000ProxyHealthCheck(): void {
   });
 }
 
-function initUpdateCheckToggle(): void {
-  if (!updateCheckToggle || updateCheckToggle.dataset.bound === "true") return;
-  updateCheckToggle.dataset.bound = "true";
-  updateCheckToggle.addEventListener("change", () => {
-    const enabled = Boolean(updateCheckToggle.checked);
-    uiState.appSettings[UPDATE_CHECK_ENABLED_SETTING] = enabled;
-    setAppSetting(UPDATE_CHECK_ENABLED_SETTING, enabled);
+
+function initWindowModeSelect(): void {
+  if (!windowModeSelect || windowModeSelect.dataset.bound === "true") return;
+  windowModeSelect.dataset.bound = "true";
+  windowModeSelect.addEventListener("change", () => {
+    const value = windowModeSelect.value;
+    uiState.appSettings[WINDOW_MODE_SETTING] = value;
+    setAppSetting(WINDOW_MODE_SETTING, value);
   });
 }
 
@@ -1142,9 +1144,9 @@ export function refreshSettingsView(): void {
     const multiThreaded = getSettingValue(DSP_MULTI_THREADED_SETTING);
     dspMultiThreadedToggle.checked = multiThreaded === null ? true : Boolean(multiThreaded);
   }
-  if (updateCheckToggle) {
-    const updateCheckEnabled = getSettingValue(UPDATE_CHECK_ENABLED_SETTING);
-    updateCheckToggle.checked = updateCheckEnabled === null ? true : Boolean(updateCheckEnabled);
+  if (windowModeSelect) {
+    const mode = getSettingValue(WINDOW_MODE_SETTING);
+    windowModeSelect.value = mode === "menuBar" ? "menuBar" : "dock";
   }
   if (tone3000UseSoundshedApiToggle) {
     const useSoundshedApi = getSettingValue(TONE3000_USE_SOUNDSHED_API_SETTING);
@@ -1160,6 +1162,9 @@ export function refreshSettingsView(): void {
   const showAudioPreferences = Boolean(uiState.environment?.standalone);
   openAudioPreferencesRow?.toggleAttribute("hidden", !showAudioPreferences);
   openAudioPreferencesHint?.toggleAttribute("hidden", !showAudioPreferences);
+  const isMacOS = uiState.environment?.os === "macOS";
+  windowModeRow?.toggleAttribute("hidden", !isMacOS);
+  windowModeHint?.toggleAttribute("hidden", !isMacOS);
   syncFeatureVisibility();
   updateSignalDiagnosticsView();
   updateCurrentVersionDisplay();

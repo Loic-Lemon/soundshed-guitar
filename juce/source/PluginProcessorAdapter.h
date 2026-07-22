@@ -100,6 +100,11 @@ public:
     static void setStandaloneDeviceManager (juce::AudioDeviceManager* mgr);
     [[nodiscard]] static juce::AudioDeviceManager* getStandaloneDeviceManager();
 
+    // ── Standalone window control callbacks ───────────────────────
+    /// Register a callback invoked when the UI requests window close in standalone mode.
+    /// If set, the adapter will call this instead of triggering a full app quit.
+    static void setOnStandaloneHideWindowRequested (std::function<void()> callback);
+
     // ── Accessors ──────────────────────────────────────────────────
     [[nodiscard]] guitarfx::PluginController& getController() { return mController; }
 

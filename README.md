@@ -7,12 +7,15 @@
 > Current changes are mostly visual or QOL. I'll keep adding things as I need them.
 >
 > See [fork_changelog.md](fork_changelog.md) for details.
+>
+> **Installation:** Build via `./build_macos.sh --native --no-pkg`, then drag
+> `macos-dist/Applications/Fork - Soundshed Guitar.app` to your Applications folder.
+> I've only tested this fork for my own use — anyone who tries it does so at
+> their own risk.
 
 # Soundshed Guitar
 
 Soundshed Guitar is a guitar/bass effects app and plugin combining Neural Amp Modeler (NAM) with a modern UI. It targets VST3, AU, CLAP and AAX formats with an extensible signal graph architecture.
-
-Downloads: https://guitar.soundshed.com
 
 Requirements: x64 CPU with AVX2 support (circa late 2015+; use `build_windows.bat --no-avx2` for a non-AVX2 Windows build), or M1 onwards for macOS.
 
